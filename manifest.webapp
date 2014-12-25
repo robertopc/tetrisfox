@@ -1,0 +1,28 @@
+{
+    "version": "1.0.0",
+    "name": "TetrisFOX",
+    "description": "The famous game Tetris for FirefoxOS",
+    "launch_path": "/index.html",
+    "size": 133000,
+    "developer": {
+        "name": "RobertoPC",
+        "url": "http://robertopc.net"
+    },
+    "icons": {
+        "60": "/icons/60.png",
+        "128": "/icons/128.png"
+    },
+    "orientation": ["portrait"],
+    "installs_allowed_from": ["*"],
+    "default_locale": "en-US",
+    "locales": {
+        "pt-BR": {
+            "name": "TetrisFOX",
+            "description": "O famoso jogo Tetris para FirefoxOS"
+        },
+        "es": {
+            "name": "TetrisFOX",
+            "description": "El famoso juego Tetris para FirefoxOS"
+        }
+    }
+}

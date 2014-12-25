@@ -10,12 +10,11 @@
     ; * Initial Release
 */
 
-//var App = new function() {
 // VARIABLES ---------------------------------------------------------------------------
 
     // debug object
     var debug = {
-                    active            : true, // enable/disable debug
+                    active            : false, // enable/disable debug
                     randomPieceReturn : null   // set manually the random pieces ( 0 - 6 ), if null no set piece
                 };
 
@@ -43,6 +42,10 @@
 
     // time of the step in milliseconds
     var stepTime = 500;
+
+    // game loop
+    var start    = false;
+    var firsTime = true;
 
     // flag for the last step time
     var lastStepTime = 0;
@@ -225,9 +228,6 @@
         }
     } // end Main
 
-    var start    = false;
-    var firsTime = true;
-
     function mainLoop( timestamp ) {
 
         start = ! start ? timestamp : start;
@@ -237,7 +237,7 @@
         if ( firsTime || progress > stepTime ) {
 
             main();
-            
+
             start = false;
 
             firsTime = false;
@@ -1038,7 +1038,6 @@
                 break;
         }
     }
-//};
 
 // When localization loaded start the loop
 window.onload = function() {

@@ -330,6 +330,10 @@ iframe {
         left: 0;
         width: 320px;
         height: 415px;
+        background-color: white;
+        background-image: url(../img/load.gif);
+        background-repeat: no-repeat;
+        background-position: center center;
         z-index: 5;
     }
 
@@ -340,7 +344,8 @@ iframe {
         right:0;
         width: 32px;
         height: 32px;
-        background-color: red;
+        background-image: url(../img/close.png);
+        background-repeat: no-repeat;
         z-index: 6;
     }
 
@@ -350,6 +355,11 @@ iframe {
 .txt12 {
 
 	font-size: 12px;
+}
+
+.txt14 {
+
+	font-size: 14px;
 }
 
 .txt16 {
