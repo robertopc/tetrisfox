@@ -22,15 +22,19 @@ kbd {
 	border-radius: 5px;
 }
 
+iframe {
+
+    border: none;
+}
+
 #container {
 
 	position: absolute;
-	left: 50%;
-	top: 50%;
+    left: 0;
+    top: 0;
 	width: 320px;
 	height: 470px;
 	background: url('../img/background.png') no-repeat;
-	margin: -235px 0 0 -160px;
 }
 
 #header {
@@ -44,11 +48,11 @@ kbd {
 	font-size: 50px;
 	text-align: center;
 	color: white;
-    z-index: 10;
+    z-index: 4;
 }
 
 #logo {
-    
+
     margin-top: 5px;
 }
 
@@ -129,7 +133,7 @@ kbd {
 			background-repeat: no-repeat;
 			z-index: 3;
 		}
-	
+
 /* SETTINGS END ----------------------------------------------------------------- */
 
 /* BUTTONS BEGIN ----------------------------------------------------------------- */
@@ -269,23 +273,22 @@ kbd {
 
     display: none;
 	position: absolute;
-	top: 50%;
-	left: 50%;
+	top: 0;
+	left: 320px;
 	width: 300px;
 	height: 450px;
 	color: white;
 	border: white 1px dashed;
-	margin: -235px 0 0 160px;
 	padding: 10px;
 	overflow: auto;
 	word-break: break-all;
     background-color: black;
-    z-index: 10;
+    z-index: 4;
 }
 
-/* HELP PC ------------------------------------------------------------------- */
+/* SIDEBARS ------------------------------------------------------------------- */
 
-#helpPC {
+#leftSidebar {
 
     display: none;
 	position: absolute;
@@ -300,10 +303,10 @@ kbd {
 	overflow: auto;
 	font-family: monospace;
 }
-/* SIDEBAR ------------------------------------------------------------------- */
 
-#sidebar {
+#rightSidebar {
 
+    display: none;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -317,6 +320,29 @@ kbd {
 	font-family: monospace;
 }
 
+/* FRAME ------------------------------------------------------------------- */
+
+    #frameDiv {
+
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 320px;
+        height: 415px;
+        z-index: 5;
+    }
+
+    #frameClose {
+
+        position: absolute;
+        top:0;
+        right:0;
+        width: 32px;
+        height: 32px;
+        background-color: red;
+        z-index: 6;
+    }
 
 /* TEXT ------------------------------------------------------------------- */
 
@@ -361,14 +387,33 @@ kbd {
 /* SCREEN WIDTH EQUAL OR GREATER THAN 960px -------------------------------------------------------------- */
 
 @media ( min-width: 960px ) {
-    
-    #ads {
-        
+
+    #container,
+    #appConsole,
+    #frameDiv {
+
+        left: 50%;
+        top: 50%;
+        margin: -235px 0 0 -160px;
+    }
+
+    #appConsole {
+
+        margin: -235px 0 0 160px;
+    }
+
+    #frameDiv {
+
+        margin: -180px 0 0 -160px;
+    }
+
+    #rightSidebar {
+
         display: block;
     }
-    
-    #helpPC {
-        
+
+    #leftSidebar {
+
         display: block;
     }
 }

@@ -94,9 +94,9 @@
             <p class="txt16">&nbsp;</p>
             <p class="txt32" data-l10n-id="about">ABOUT</p>
             <p class="txt16" data-l10n-id="developed-by">developed by RobertoPC</p>
-            <p class="txt16"><a href="http://robertopc.com.br" class="white">http://robertopc.com.br</a></p>
-            <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://www.soundjay.com" class="white">http://soundjay.om</a></p>
-            <p class="txt16"><span data-l10n-id="like-it-keep-a-review">Like it? Keep a review</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="here">here</a></p>
+            <p class="txt16"><a href="#" class="white" onclick="javascript:openLink('http://robertopc.net/about')">http://robertopc.net/about</a></p>
+            <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="#" class="white" onclick="javascript:openLink('http://www.soundjay.com')">http://soundjay.com</a></p>
+            <p class="txt16"><span data-l10n-id="like-it-keep-a-review">Like it? Keep a review</span> <a href="#" class="white" data-l10n-id="here" onclick="javascript:openLink('https://marketplace.firefox.com/app/tetrisfox/ratings/add')">here</a></p>
             <p class="txt16"><span data-l10n-id="version">version</span> 1.0.0 - 10 Dez 2014</p>
             <p class="txt16">&nbsp;</p>
             <p class="txt16">I &#9829; Sabrina</p>
@@ -121,7 +121,7 @@
 
     <div id="appConsole"></div>
 
-    <div id="helpPC">
+    <div id="leftSidebar">
 
         <p class="txt18" data-l10n-id="use-keyboard-to-play">Use keyboard to play</p>
 
@@ -132,10 +132,18 @@
 
     </div>
 
-    <div id="sidebar">
+    <div id="rightSidebar">
 
         <p class="txt18"></p>
 
+    </div>
+
+    <div id="frameDiv">
+        
+        <div id="frameClose" onclick="javascript:closeLink()"></div>
+        
+        <iframe src="" id="frameLink" width="100%" height="100%"></iframe>
+        
     </div>
 
     <!-- SCRIPTS -->
