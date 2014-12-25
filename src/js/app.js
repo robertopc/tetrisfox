@@ -10,7 +10,6 @@
     ; * Initial Release
 */
 
-var App = new function() {
 // VARIABLES ---------------------------------------------------------------------------
 
     // debug object
@@ -43,6 +42,10 @@ var App = new function() {
 
     // time of the step in milliseconds
     var stepTime = 500;
+
+    // game loop
+    var start    = false;
+    var firsTime = true;
 
     // flag for the last step time
     var lastStepTime = 0;
@@ -225,13 +228,23 @@ var App = new function() {
         }
     } // end Main
 
-    // main loop of the game
-    this.mainLoop = function() {
+    function mainLoop( timestamp ) {
 
-        main();
+        start = ! start ? timestamp : start;
 
-        window.setTimeout( function() { App.mainLoop(); }, stepTime );
-    }; // end mainLoop
+        var progress = timestamp - start;
+
+        if ( firsTime || progress > stepTime ) {
+
+            main();
+
+            start = false;
+
+            firsTime = false;
+        }
+
+        window.requestAnimationFrame(mainLoop);
+    }
 
 // FUNCTIONS -------------------------------------------------
 
@@ -767,14 +780,14 @@ var App = new function() {
             currentLevel = level;
 
             // verify if move down fast is active
-            // if true, decrease in 10% last step time
+            // if true, decrease 50ms in last step time
             if( lastStepTime / stepTime == 10 ) {
 
-                lastStepTime *= 0.9;
+                lastStepTime -= 50;
             }
 
-            // decrease 10% of the time per level
-            stepTime *= 0.9;
+            // decrease 50ms of the time per level
+            stepTime -= 50;
         }
     } // end addScore
 
@@ -858,6 +871,24 @@ var App = new function() {
 
         return value.charAt(0).toUpperCase() + value.slice(1);
     } // end capitalize
+
+    // show link in frame
+    function openLink( url ) {
+
+        toggleAudio();
+
+        document.getElementById('frameLink').src = url;
+        document.getElementById('frameDiv').style.display = 'block';
+    } // openLink
+
+    // hide open link
+    function closeLink() {
+
+        toggleAudio();
+
+        document.getElementById('frameLink').src = '';
+        document.getElementById('frameDiv').style.display = 'none';
+    } // end closeLink
 
 // END FUNCTIONS -------------------------------------------
 
@@ -1007,10 +1038,9 @@ var App = new function() {
                 break;
         }
     }
-};
 
 // When localization loaded start the loop
 window.onload = function() {
 
-    navigator.mozL10n.ready( App.mainLoop() );
+    navigator.mozL10n.ready( mainLoop() );
 }
