@@ -12,6 +12,7 @@
         "128": "/icons/128.png"
     },
     "orientation": ["portrait"],
+    "fullscreen": "true",
     "installs_allowed_from": ["*"],
     "default_locale": "en-US",
     "locales": {
