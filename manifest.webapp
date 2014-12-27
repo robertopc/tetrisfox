@@ -3,7 +3,6 @@
     "name": "TetrisFOX",
     "description": "The famous game Tetris for FirefoxOS",
     "launch_path": "/index.html",
-    "size": 133000,
     "developer": {
         "name": "RobertoPC",
         "url": "http://robertopc.net"
@@ -13,6 +12,7 @@
         "128": "/icons/128.png"
     },
     "orientation": ["portrait"],
+    "fullscreen": "true",
     "installs_allowed_from": ["*"],
     "default_locale": "en-US",
     "locales": {
