@@ -33,7 +33,7 @@ iframe {
     left: 0;
     top: 0;
 	width: 320px;
-	height: 470px;
+	height: 480px;
 	background: url('../img/background.png') no-repeat;
 }
 
@@ -200,9 +200,9 @@ iframe {
 		left: 0;
 		top: 0;
 		width: 320px;
-		height: 470px;
+		height: 480px;
 		background-color: rgba( 0, 0, 0, 0.9 );
-		line-height: 470px;
+		line-height: 480px;
 		text-align: center;
 		z-index: 2;
 		display: none;
@@ -216,7 +216,7 @@ iframe {
 		left: 0;
 		top: 0;
 		width: 320px;
-		height: 470px;
+		height: 480px;
 		background-color: rgba( 0, 0, 0, 0.9 );
 		text-align: center;
 		z-index: 2;
@@ -231,7 +231,7 @@ iframe {
 		left: 0;
 		top: 0;
 		width: 320px;
-		height: 470px;
+		height: 480px;
 		background-color: rgba( 0, 0, 0, 0.9 );
 		text-align: center;
 		z-index: 3;
