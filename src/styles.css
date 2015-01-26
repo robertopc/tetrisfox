@@ -26,34 +26,71 @@ iframe {
 
     border: none;
 }
+@keyframes fadeout {
 
-#container {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        top: -480px;
+        z-index: 0;
+    }
+}
+#load {
+
+	position: absolute;
+    left: 0;
+    top: 0;
+	width: 100%;
+	height: 100%;
+    box-sizing: border-box;
+    background-color: rgba( 0, 0, 0, 0.9 );
+    background-color: #177CC5;
+    z-index: 7;
+    /* Fadeout animation */
+    animation-name: fadeout;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+    #logo {
+
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        margin: -23px 0 0 -145px ;
+    }
+
+    @keyframes giro {
+        to {
+            transform: rotate(360deg);
+            transform-origin: center center;
+        }
+    }
+    #loadsvg {
+
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        margin: 128px 0 0 -16px ;
+        animation: giro 1s linear infinite;
+    }
+
+#game {
 
 	position: absolute;
     left: 0;
     top: 0;
 	width: 320px;
 	height: 480px;
-	background: url('../img/background.png') no-repeat;
-}
-
-#header {
-
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 50px;
-	line-height: 50px;
-	font-size: 50px;
-	text-align: center;
-	color: white;
-    z-index: 4;
-}
-
-#logo {
-
-    margin-top: 5px;
+	background-image: url('img/background.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 /* CANVAS BEGIN ----------------------------------------------------------------- */
@@ -61,21 +98,31 @@ iframe {
 	#screen {
 
 		position: absolute;
-		top: 55px;
+		top: 5px;
 		left: 5px;
 	}
+
+    #nextPiece {
+
+        position: absolute;
+        top: 5px;
+        right: 5px;
+		width: 100px;
+        text-transform: uppercase;
+    }
 
 	#screenNextPiece {
 
 		position: absolute;
-		top: 55px;
+		top: 40px;
 		right: 5px;
+        background-color: rgba( 0, 0, 0, 0 );
 	}
 
 	#info {
 
 		position: absolute;
-		top: 140px;
+		top: 100px;
 		right: 5px;
 		width: 100px;
 		text-transform: uppercase;
@@ -93,7 +140,7 @@ iframe {
 	#settings	{
 
 		position: absolute;
-		top: 315px;
+		top: 290px;
 		right: 5px;
 		width: 100px;
 		height: 100px;
@@ -103,10 +150,10 @@ iframe {
 
 			position: absolute;
 			top: 0;
-			left: 27px;
+			left: 0;
 			width: 46px;
 			height: 46px;
-			background-image: url('../img/button-pause.png');
+			background-image: url('img/button-pause.svg');
 			background-repeat: no-repeat;
 			z-index: 3;
 		}
@@ -114,22 +161,34 @@ iframe {
 		#buttonAudio {
 
 			position: absolute;
-			top: 46px;
+			top: 56px;
 			left: 0;
 			width: 46px;
 			height: 46px;
-			background-image: url('../img/button-audio-on.png');
+			background-image: url('img/button-audio-on.svg');
 			background-repeat: no-repeat;
 		}
 
 		#buttonAbout {
 
 			position: absolute;
-			top: 46px;
+			top: 56px;
 			right: 0;
 			width: 46px;
 			height: 46px;
-			background-image: url('../img/button-about.png');
+			background-image: url('img/button-about.svg');
+			background-repeat: no-repeat;
+			z-index: 3;
+		}
+
+		#buttonRanking {
+
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 46px;
+			height: 46px;
+			background-image: url('img/button-ranking.svg');
 			background-repeat: no-repeat;
 			z-index: 3;
 		}
@@ -141,54 +200,44 @@ iframe {
 	#buttons {
 
 		position: absolute;
-		top: 420px;
+		bottom: 5px;
 		left: 0;
 		width: 100%;
-		height: 50px;
-		background-image: url('../img/buttons.png');
-		background-repeat: no-repeat;
+		height: auto;
 	}
 		.buttonRound {
 
-			width: 25%;
-			height: 50px;
+            float: left;
 			text-align: center;
 			font-size: 50px;
 			line-height: 50px;
-            width: 46px;
-            height: 46px;
+            width: 60px;
+            height: 60px;
+            margin: 0 10px 0 10px;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
+            box-sizing: border-box;
 		}
 
-		#buttonLeft {
+        #buttonLeft {
 
-			position: absolute;
-			top: 0;
-			left: 15px;
-		}
+            background-image: url(img/button-left.svg);
+        }
 
-		#buttonRight {
+        #buttonDown {
 
-			position: absolute;
-			top: 0;
-			left: 254px;
-		}
+            background-image: url(img/button-down.svg);
+        }
 
+        #buttonRotate {
 
-		#buttonDown {
+            background-image: url(img/button-rotate.svg);
+        }
 
-			position: absolute;
-			top: 0;
-			left: 95px;
-		}
+        #buttonRight {
 
-
-		#buttonRotate {
-
-			position: absolute;
-			top: 0;
-			left: 174px;
-		}
+            background-image: url(img/button-right.svg);
+        }
 
 /* END BUTTONS ----------------------------------------------------------------- */
 
@@ -202,7 +251,6 @@ iframe {
 		width: 320px;
 		height: 480px;
 		background-color: rgba( 0, 0, 0, 0.9 );
-		line-height: 480px;
 		text-align: center;
 		z-index: 2;
 		display: none;
@@ -295,7 +343,7 @@ iframe {
 	top: 50%;
 	left: 50%;
 	width: 270px;
-	height: 420px;
+	height: 430px;
 	color: white;
     background-color: #1366A1;
 	margin: -235px 0 0 -480px;
@@ -311,7 +359,7 @@ iframe {
 	top: 50%;
 	left: 50%;
 	width: 270px;
-	height: 420px;
+	height: 430px;
 	color: white;
     background-color: #1366A1;
 	margin: -235px 0 0 160px;
@@ -322,16 +370,16 @@ iframe {
 
 /* FRAME ------------------------------------------------------------------- */
 
-    #frameDiv {
+    #frame {
 
         display: none;
         position: absolute;
         top: 70px;
         left: 0;
         width: 320px;
-        height: 415px;
+        height: 420px;
         background-color: white;
-        background-image: url(../img/load.gif);
+        background-image: url(img/load.gif);
         background-repeat: no-repeat;
         background-position: center center;
         z-index: 5;
@@ -344,13 +392,19 @@ iframe {
         right:0;
         width: 32px;
         height: 32px;
-        background-image: url(../img/close.png);
+        background-image: url(img/close.svg);
         background-repeat: no-repeat;
         z-index: 6;
     }
 
-/* TEXT ------------------------------------------------------------------- */
+/* ICONS ------------------------------------------------------------------- */
 
+.icon {
+
+    margin: 5px;
+}
+
+/* TEXT ------------------------------------------------------------------- */
 
 .txt12 {
 
@@ -394,13 +448,37 @@ iframe {
 	visibility: visible;
 }
 
+.tleft {
+    text-align: left;
+}
+
+.tright {
+    text-align: right;
+}
+
+.tcenter {
+    text-align: center;
+}
+
+/* TEXT ------------------------------------------------------------------- */
+
+.paddingH10 {
+
+    padding: 0 10%;
+}
+
+.paddingH25 {
+
+    padding: 0 25%;
+}
+
 /* SCREEN WIDTH EQUAL OR GREATER THAN 960px -------------------------------------------------------------- */
 
 @media ( min-width: 960px ) {
 
-    #container,
+    #game,
     #appConsole,
-    #frameDiv {
+    #frame {
 
         left: 50%;
         top: 50%;
@@ -412,7 +490,7 @@ iframe {
         margin: -235px 0 0 160px;
     }
 
-    #frameDiv {
+    #frame {
 
         margin: -180px 0 0 -160px;
     }

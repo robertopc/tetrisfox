@@ -7,26 +7,30 @@
 
     <title>TetrisFOX</title>
 
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 
     <!-- Localization -->
-    <link rel="resource" type="application/l10n" href="locales/locales.ini">
-    <script type="application/javascript" src="js/l10n.js"></script>
+    <script type="application/javascript" src="js/l10n.min.js"></script>
+    <script type="application/javascript" src="js/localizations.js"></script>
 
 </head>
 <body>
 
-    <div id="container">
+    <section id="load">
 
-        <div id="header">
+        <img src="img/logo.svg" id="logo">
 
-            <img src="img/logo.png" id="logo">
+        <img src="img/load.svg" id="loadsvg">
 
-        </div>
+    </section>
 
-        <canvas id="screen" width="200" height="360"></canvas>
+    <section id="game">
 
-        <canvas id="screenNextPiece" width="100" height="80"></canvas>
+        <canvas id="screen" width="200" height="400"></canvas>
+
+        <div id="nextPiece" data-l10n-id="next">Next</div>
+
+        <canvas id="screenNextPiece" width="100" height="40"></canvas>
 
         <table id="info">
 
@@ -69,6 +73,8 @@
 
             <div id="buttonAbout"></div>
 
+            <div id="buttonRanking"></div>
+
         </div>
 
         <div id="buttons">
@@ -91,14 +97,28 @@
 
         <div id="about">
 
-            <p class="txt16">&nbsp;</p>
             <p class="txt32" data-l10n-id="about">ABOUT</p>
             <p class="txt16" data-l10n-id="developed-by">developed by RobertoPC</p>
-            <p class="txt16"><a href="http://robertopc.net/about" class="white" target="frameLink">http://robertopc.net/about</a></p>
+
+            <p class="txt16 tcenter paddingH10">
+
+                <img src="img/twitter.svg" align="middle" class="icon">
+
+                <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>
+            </p>
+
+            <p class="txt16 tcenter paddingH10">
+
+                <img src="img/github.svg" align="middle" class="icon">
+
+                <a href="https://github.com/robertopc/tetrisfox" class="white" target="_blank">https://github.com/robertopc/tetrisfox</a>
+
+            </p>
+
             <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://soundjay.com" class="white" target="frameLink">http://soundjay.com</a></p>
-            <p class="txt16">Source <a href="https://github.com/robertopc/tetrisfox" class="white" target="_blank">https://github.com/robertopc/tetrisfox</a></p>
+
             <p class="txt16"><span data-l10n-id="like-it-keep-a-review">Like it? Keep a review</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="here" target="frameLink">here</a></p>
-            <p class="txt16"><span data-l10n-id="version">version</span> 1.0.0</p>
+            <p class="txt16"><span data-l10n-id="version">version</span> 1.1.0</p>
             <p class="txt16">&nbsp;</p>
             <p class="txt16">I &#9829; Sabrina</p>
 
@@ -106,7 +126,6 @@
 
         <div id="gameOver">
 
-            <p class="txt16">&nbsp;</p>
             <p class="txt32" data-l10n-id="game-over">Game Over</p>
             <p class="txt16"></p>
             <p class="txt16"><span data-l10n-id="score">Score</span>: <span id="gameOverScore"></span></p>
@@ -118,11 +137,11 @@
 
         </div>
 
-    </div>
+    </section>
 
-    <div id="appConsole"></div>
+    <section id="appConsole"></section>
 
-    <div id="leftSidebar">
+    <section id="leftSidebar">
 
         <p class="txt18" data-l10n-id="use-keyboard-to-play">Use keyboard to play</p>
 
@@ -131,34 +150,46 @@
         <p class="txt24"><kbd>&#8593;</kbd> <span data-l10n-id="or">or</span> <kbd>space</kbd> <span data-l10n-id="to-rotate">to rotate</span></p>
         <p class="txt24"><kbd>&#8595;</kbd> <span data-l10n-id="move-down">move down</span></p>
 
-    </div>
+    </section>
 
-    <div id="rightSidebar">
+    <section id="rightSidebar">
 
-        <p class="txt16">View source <a href="https://github.com/robertopc/tetrisfox" class="white">https://github.com/robertopc/tetrisfox</a></p>
+        <p class="txt16">
+            <img src="img/github.svg" align="middle" class="icon">
+            <a href="https://github.com/robertopc/tetrisfox" class="white">https://github.com/robertopc/tetrisfox</a>
+        </p>
         <p class="txt16">&nbsp;</p>
-        <p class="txt16">Fork now on Github <a href="https://github.com/robertopc/tetrisfox/fork" class="white">https://github.com/robertopc/tetrisfox/fork</a></p>
+        <p class="txt16 tcenter"><span data-l10n-id="version">version</span> 1.1.0</p>
         <p class="txt16">&nbsp;</p>
-        <p class="txt16"><span data-l10n-id="version">version</span> 1.0.0</p>
+        <p class="txt16">
+
+            <img src="https://avatars3.githubusercontent.com/u/1685216?v=3&s=60" style="float:left; border: white 1px solid; margin-right: 5px">
+
+            <a href="https://github.com/robertopc" class="white">RobertoPC</a><br>maintains <a href="https://github.com/robertopc/tetrisfox" class="white">TetrisFOX</a>
+        </p>
         <p class="txt16">&nbsp;</p>
-        <p class="txt16"><img src="https://avatars3.githubusercontent.com/u/1685216?v=3&s=60" style="float:left; border: white 1px solid; margin-right: 5px"><a href="https://github.com/robertopc" class="white">RobertoPC</a><br>maintains <a href="https://github.com/robertopc/tetrisfox" class="white">TetrisFOX</a></p>
+        <p class="txt16 tleft">
 
+            <img src="img/twitter.svg" align="middle" class="icon">
+            <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>
 
-    </div>
+        </p>
 
-    <div id="frameDiv">
+    </section>
+
+    <section id="frame">
 
         <div id="frameClose"></div>
 
         <iframe src="" name="frameLink" id="frameLink" width="100%" height="100%"></iframe>
 
-    </div>
+    </section>
 
     <!-- SCRIPTS -->
     <script type="text/javascript" src="js/app.js"></script>
 
     <!-- AUDIOS -->
-    <audio id="backgroundAudio" src="audio/korobeiniki.ogg" autoplay loop></audio>
+    <audio id="backgroundAudio" src="audio/korobeiniki.ogg" loop></audio>
 
     <!-- Soundfx by http://www.soundjay.com -->
     <audio id="soundfxCompleteRow" src="audio/button-11.ogg" preload></audio>

@@ -3,9 +3,16 @@
     Description : The famous game Tetris made for FirefoxOS by RobertoPC
     Author      : RobertoPC
     Author URI  : http://robertopc.net
-    Version     : 1.0.0
+    Version     : 1.1.0
 
     Modification log:
+    ; XX Jan 2015 - 1.1.0
+    ; * Changed l10n script
+    ; * Changed height of screen
+    ; * Changed images PNG for SVG
+    ; * Added ranking
+    ; * Added close button for desktop browser
+    ; * Added load screen
     ; 26 Dez 2014 - 1.0.0
     ; * Initial Release
 */
@@ -88,9 +95,11 @@ var grid = {
                             [0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0],
+                            [0,0,0,0,0,0,0,0,0,0],
+                            [0,0,0,0,0,0,0,0,0,0],
                             [0,0,0,0,0,0,0,0,0,0]
                          ],
-                r : 18, // rows
+                r : 20, // rows
                 c : 10  // columns
             };
 
@@ -98,11 +107,9 @@ var grid = {
 var gridnextPiece = {
                         matrix: [
                                     [0,0,0,0,0],
-                                    [0,0,0,0,0],
-                                    [0,0,0,0,0],
                                     [0,0,0,0,0]
                                 ],
-                        r : 4, // rows
+                        r : 2, // rows
                         c : 5  // columns
                       };
 
@@ -243,7 +250,14 @@ function mainLoop() {
 
     var progress = now - start;
 
+    // if passed step time or first time in loop
     if ( firsTime || progress > stepTime ) {
+
+        // if first time
+        if( firsTime ) {
+        
+            playSFX('background');
+        }
 
         main();
 
@@ -358,15 +372,19 @@ function drawNextPiece() {
             var color = colors[ nextPiece.matrix[ l ][ c ] ];
 
             var x = ( 100 / 2 ) + c * blockSize - ( nextPiece.c / 2 ) * blockSize;
-            var y = ( 80 / 2 ) + l * blockSize - ( nextPiece.l / 2 ) * blockSize;
+            var y = ( 40 / 2 ) + l * blockSize - ( nextPiece.l / 2 ) * blockSize;
 
             // fill filled blocks
-            canvasNextPiece.fillStyle = color;
-            canvasNextPiece.fillRect( x, y, blockSize, blockSize );
+            if( color != 'white' ) {
 
-            // stroke filled blocks
-            canvasNextPiece.strokeStyle = 'white';
-            canvasNextPiece.strokeRect( x, y, blockSize, blockSize );
+                canvasNextPiece.fillStyle = color;
+                canvasNextPiece.fillRect( x, y, blockSize, blockSize );
+
+                // stroke filled blocks
+                canvasNextPiece.strokeStyle = 'white';
+                canvasNextPiece.strokeRect( x, y, blockSize, blockSize );
+            }
+
         }
     }
 
@@ -664,8 +682,9 @@ function togglePause() {
     // if paused, show pause div
     document.getElementById('pause').style.display = ( settings.pause ) ? 'block' : 'none' ;
 
-    // put below/above about button
+    // put below/above buttons
     document.getElementById('buttonAbout').style.zIndex = ( settings.pause ) ? 0 : 3 ;
+    document.getElementById('buttonRanking').style.zIndex = ( settings.pause ) ? 0 : 3 ;
 
 } // togglePause
 
@@ -675,31 +694,35 @@ function toggleAbout() {
     // toggle about
     settings.about = ! settings.about;
 
-    // if about called
-    if( settings.about ) {
+    // pause game
+    settings.pause = ( settings.about ) ? true : false ;
 
-        // pause game
-        settings.pause = true;
+    // show about div
+    document.getElementById('about').style.display = ( settings.about ) ? 'block' : 'none' ;
 
-        // show about div
-        document.getElementById('about').style.display = 'block' ;
-
-        // put pause button below
-        document.getElementById('buttonPause').style.zIndex = 0 ;
-
-    } else {
-
-        // remove game pause
-        settings.pause = false;
-
-        // hide about div
-        document.getElementById('about').style.display = 'none' ;
-
-        // put pause button above
-        document.getElementById('buttonPause').style.zIndex = 3 ;
-    }
+    // put buttons above/below
+    document.getElementById('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    document.getElementById('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
 
 } // end toggleAbout
+
+// toggle state of the ranking
+function toggleRanking() {
+
+    // toggle about
+    settings.about = ! settings.about;
+
+    // pause game
+    settings.pause = ( settings.about ) ? true : false ;
+
+    // show about div
+    document.getElementById('about').style.display = ( settings.about ) ? 'block' : 'none' ;
+
+    // put buttons above/below
+    document.getElementById('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    document.getElementById('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
+
+} // end toggleRanking
 
 // toggle state of the audio
 function toggleAudio() {
@@ -714,7 +737,7 @@ function toggleAudio() {
         document.getElementById('backgroundAudio').play();
 
         // insert image of audio on
-        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-on.png)';
+        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-on.svg)';
 
     } else {
 
@@ -722,7 +745,7 @@ function toggleAudio() {
         document.getElementById('backgroundAudio').pause();
 
         // insert image of audio off
-        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-off.png)';
+        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-off.svg)';
     }
 
 } // end toggleAudio
@@ -735,15 +758,9 @@ function playSFX( effect ) {
 
         switch( effect ) {
 
-            case'move':
+            case'background':
 
-                //document.getElementById('soundfxMove').play();
-
-                break;
-
-            case'rotate':
-
-                //document.getElementById('soundfxRotate').play();
+                document.getElementById('backgroundAudio').play();
 
                 break;
 
@@ -851,25 +868,25 @@ function buttonPressed( button ) {
 
         case'down':
 
-            document.getElementById( 'buttonDown' ).style.backgroundImage = 'url(img/button-down-pressed.png)';
+            document.getElementById( 'buttonDown' ).style.backgroundImage = 'url(img/button-down-pressed.svg)';
 
             break;
 
         case'down-release':
 
-            document.getElementById( 'buttonDown' ).style.backgroundImage = 'none';
+            document.getElementById( 'buttonDown' ).style.backgroundImage = 'url(img/button-down.svg)';
 
             break;
 
         default:
 
             // insert button pressed image
-            document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '-pressed.png)';
+            document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '-pressed.svg)';
 
             // hide button pressed image after few moment
             window.setTimeout( function() {
 
-                document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'none';
+                document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '.svg)';
 
             }, 300 );
     }
@@ -1072,8 +1089,67 @@ document.getElementById('frameClose').onclick = function() {
     closeLink();
 }
 
+// When click in ranking button
+document.getElementById('buttonRanking').onclick = function() {
+
+    // if online
+    if( navigator.onLine ) {
+
+        //  if not setted, set 0
+        var device_id = localStorage.getItem('device_id') || '';
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+
+            // if ready
+            if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) {
+
+                // parse response json
+                var response = JSON.parse( xmlhttp.responseText );
+
+                console.log( response );
+
+                // set the data
+                localStorage.setItem( 'device_id', response.device_id );
+                localStorage.setItem( 'position', response.position );
+                localStorage.setItem( 'country', response.country );
+            }
+        }
+
+        xmlhttp.open( "get", "http://localhost/tetrisfox/backend/ranking.php?token=TETRISFOX&device_id="+ device_id +'&record=' + record , true );
+        xmlhttp.send();
+
+    } else {
+
+        settins.pause = true;
+
+        alert('Offline');
+    }
+}
+
 // When localization loaded start the loop
 window.onload = function() {
 
-    navigator.mozL10n.ready( mainLoop() );
+    // callback for translate strings
+    var l = function (string) {
+        return string.toLocaleString();
+    };
+
+    // get localization strings
+    var strings = document.querySelectorAll('*[data-l10n-id]');
+
+    for( s in strings ) {
+
+        // if dont have attributes
+        if( strings[ s ].attributes == undefined ) {
+            break;
+        }
+
+        // translate the string
+        strings[ s ].innerHTML = l( '%' + strings[ s ].getAttribute("data-l10n-id") );
+    }
+
+    // initialize main loop
+    mainLoop();
 }
