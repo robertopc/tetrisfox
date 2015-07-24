@@ -175,11 +175,12 @@
 		#buttonPause {
 			position: absolute;
 			top: 0;
-			left: 0;
+			left: 50%;
 			width: 46px;
 			height: 46px;
 			background-image: url('img/button-pause.svg');
 			background-repeat: no-repeat;
+			margin-left: -23px;
 			z-index: 3;
 		}
 
@@ -200,17 +201,6 @@
 			width: 46px;
 			height: 46px;
 			background-image: url('img/button-about.svg');
-			background-repeat: no-repeat;
-			z-index: 3;
-		}
-
-		#buttonRanking {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 46px;
-			height: 46px;
-			background-image: url('img/button-ranking.svg');
 			background-repeat: no-repeat;
 			z-index: 3;
 		}

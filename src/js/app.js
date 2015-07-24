@@ -10,7 +10,6 @@
     ; * Changed l10n script
     ; * Changed height of screen
     ; * Changed images PNG for SVG
-    ; * Added ranking
     ; * Added close button for desktop application
     ; * Added load screen
     ; * Improved source
@@ -723,7 +722,6 @@ function togglePause() {
 
     // put below/above buttons
     id('buttonAbout').style.zIndex = ( settings.pause ) ? 0 : 3 ;
-    id('buttonRanking').style.zIndex = ( settings.pause ) ? 0 : 3 ;
 
 } // togglePause
 
@@ -741,27 +739,8 @@ function toggleAbout() {
 
     // put buttons above/below
     id('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
-    id('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
 
 }//toggleAbout
-
-// toggle state of the ranking
-function toggleRanking() {
-
-    // toggle about
-    settings.about = ! settings.about;
-
-    // pause game
-    settings.pause = settings.about;
-
-    // show about div
-    id('about').style.display = ( settings.about ) ? 'block' : 'none' ;
-
-    // put buttons above/below
-    id('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
-    id('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
-
-}//toggleRanking
 
 // toggle state of the audio
 function toggleAudio() {
@@ -1133,47 +1112,6 @@ for( var i = 0, l = links.length; i < l; i++ ) {
 id('frameClose').onclick = function() {
 
     closeLink();
-}
-
-// When click in ranking button
-id('buttonRanking').onclick = function() {
-
-    // if online
-    if( navigator.onLine ) {
-
-        alert('OnLine');
-
-        //  if not setted, set 0
-        var device_id = s.getItem('device_id') || '';
-
-        var xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function() {
-
-            // if ready
-            if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) {
-
-                // parse response json
-                var response = JSON.parse( xmlhttp.responseText );
-
-                console.log( response );
-
-                // set the data
-                s.setItem( 'device_id', response.device_id );
-                s.setItem( 'position', response.position );
-                s.setItem( 'country', response.country );
-            }
-        }
-
-        xmlhttp.open( "get", "http://localhost/firefoxos/tetrisfox/backend/ranking.php?token=TETRISFOX&device_id="+ device_id +'&record=' + record , true );
-        xmlhttp.send();
-
-    } else {
-
-        settings.pause = true;
-
-        alert('Offline');
-    }
 }
 
 // when DOM and localization loaded, start the loop
