@@ -1,109 +1,141 @@
-body {
+/*
+ * INDEXES
+ *
+ * 01. HTML
+ * 02. ANIMATIONS
+ * 03. CONTAINERS
+ * 04. CANVAS
+ * 05. SETTINGS
+ * 06. BUTTONS
+ * 07. POPUPS
+ *     0701. PAUSE
+ *     0702. ABOUT
+ *     0703. GAME OVER
+ * 08. SIDEBARS
+ *     0801. LEFT
+ *     0802. RIGHT
+ *     0803. APP CONSOLE
+ * 09. FRAME
+ * 10. CLASSES
+ *     1001. ICONS
+ *     1002. TEXT
+ *     1003. PADDINGS
+ * 11. SCREENS
+ *     1101. SCREENS => 960
+ */
 
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	background-color: #177CC5;
-	font-family: "Fira Sans", monospace;
-	font-size: 16px;
-	color: white;
-}
+/* 01. HTML-------------------------------------------------------------------*/
 
-canvas {
-    background-color: white;
-}
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
 
-kbd {
+	body {
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		background: #177CC5;
+		font-family: "Fira Sans", monospace;
+		font-size: 16px;
+		color: white;
+	}
 
-	background-color: black;
-	border: white 1px solid;
-	padding: 5px;
-	color: white;
-	border-radius: 5px;
-}
+	canvas {
+	    background: white;
+	}
 
-iframe {
+	kbd {
+		background: black;
+		border: white 1px solid;
+		padding: 5px;
+		color: white;
+		border-radius: 5px;
+	}
 
-    border: none;
-}
-@keyframes fadeout {
+	iframe {
+	    border: none;
+	}
 
-    from {
-        opacity: 1;
-    }
+	noscript {
+		display: block;
+		padding: 5px 0;
+		text-align: center;
+		color: #fff;
+		background: #f00;
+	}
 
-    to {
-        opacity: 0;
-        top: -480px;
-        z-index: 0;
-    }
-}
-#load {
+/* 02. ANIMATIONS-------------------------------------------------------------*/
 
-	position: absolute;
-    left: 0;
-    top: 0;
-	width: 100%;
-	height: 100%;
-    box-sizing: border-box;
-    background-color: rgba( 0, 0, 0, 0.9 );
-    background-color: #177CC5;
-    z-index: 7;
-    /* Fadeout animation */
-    animation-name: fadeout;
-    animation-duration: 2s;
-    animation-delay: 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
-    #logo {
+	@keyframes fadeout {
+	    from {
+	        opacity: 1;
+	    }
 
-        position:absolute;
-        top: 50%;
-        left: 50%;
-        margin: -23px 0 0 -145px ;
-    }
+	    to {
+	        opacity: 0;
+	        top: -100%;
+	        z-index: 0;
+	    }
+	}
 
-    @keyframes giro {
-        to {
-            transform: rotate(360deg);
-            transform-origin: center center;
-        }
-    }
-    #loadsvg {
+	@keyframes giro {
+		to {
+		    transform: rotate(360deg);
+		    transform-origin: center center;
+		}
+	}
 
-        position:absolute;
-        top: 50%;
-        left: 50%;
-        width: 32px;
-        height: 32px;
-        margin: 128px 0 0 -16px ;
-        animation: giro 1s linear infinite;
-    }
+/* 03. CONTAINERS-------------------------------------------------------------*/
 
-#game {
+	#load {
+		position: absolute;
+	    left: 0;
+	    top: 0;
+		width: 100%;
+		height: 100%;
+	    box-sizing: border-box;
+	    background: #177CC5;
+	    z-index: 7;
+	}
+	    #logo {
+	        position:absolute;
+	        top: 50%;
+	        left: 50%;
+	        margin: -23px 0 0 -145px ;
+	    }
 
-	position: absolute;
-    left: 0;
-    top: 0;
-	width: 320px;
-	height: 480px;
-	background-image: url('img/background.svg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
+	    #loadsvg {
+	        position:absolute;
+	        top: 50%;
+	        left: 50%;
+	        width: 32px;
+	        height: 32px;
+	        margin: 128px 0 0 -16px ;
+	        animation: giro 1s linear infinite;
+	    }
 
-/* CANVAS BEGIN ----------------------------------------------------------------- */
+	#game {
+		position: absolute;
+	    left: 0;
+	    top: 0;
+		width: 320px;
+		height: 480px;
+		background-image: url('img/background.svg');
+	    background-repeat: no-repeat;
+	    background-size: 100% 100%;
+	}
+
+/* 04. CANVAS-----------------------------------------------------------------*/
 
 	#screen {
-
 		position: absolute;
 		top: 5px;
 		left: 5px;
 	}
 
     #nextPiece {
-
         position: absolute;
         top: 5px;
         right: 5px;
@@ -112,15 +144,13 @@ iframe {
     }
 
 	#screenNextPiece {
-
 		position: absolute;
 		top: 40px;
 		right: 5px;
-        background-color: rgba( 0, 0, 0, 0 );
+        background: rgba( 0, 0, 0, 0 );
 	}
 
 	#info {
-
 		position: absolute;
 		top: 100px;
 		right: 5px;
@@ -129,16 +159,12 @@ iframe {
 	}
 
 		#info .numbers {
-
 			text-align: right;
 		}
 
-/* CANVAS END ----------------------------------------------------------------- */
-
-/* SETTINGS BEGIN ----------------------------------------------------------------- */
+/* 05. SETTINGS---------------------------------------------------------------*/
 
 	#settings	{
-
 		position: absolute;
 		top: 290px;
 		right: 5px;
@@ -147,7 +173,6 @@ iframe {
 	}
 
 		#buttonPause {
-
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -159,7 +184,6 @@ iframe {
 		}
 
 		#buttonAudio {
-
 			position: absolute;
 			top: 56px;
 			left: 0;
@@ -170,7 +194,6 @@ iframe {
 		}
 
 		#buttonAbout {
-
 			position: absolute;
 			top: 56px;
 			right: 0;
@@ -182,7 +205,6 @@ iframe {
 		}
 
 		#buttonRanking {
-
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -193,12 +215,9 @@ iframe {
 			z-index: 3;
 		}
 
-/* SETTINGS END ----------------------------------------------------------------- */
-
-/* BUTTONS BEGIN ----------------------------------------------------------------- */
+/* 06. BUTTONS----------------------------------------------------------------*/
 
 	#buttons {
-
 		position: absolute;
 		bottom: 5px;
 		left: 0;
@@ -206,7 +225,6 @@ iframe {
 		height: auto;
 	}
 		.buttonRound {
-
             float: left;
 			text-align: center;
 			font-size: 50px;
@@ -220,173 +238,159 @@ iframe {
 		}
 
         #buttonLeft {
-
             background-image: url(img/button-left.svg);
         }
 
         #buttonDown {
-
             background-image: url(img/button-down.svg);
         }
 
         #buttonRotate {
-
             background-image: url(img/button-rotate.svg);
         }
 
         #buttonRight {
-
             background-image: url(img/button-right.svg);
         }
 
-/* END BUTTONS ----------------------------------------------------------------- */
+/* 07. POPUPS-----------------------------------------------------------------*/
 
-/* PAUSE ------------------------------------------------------------------- */
+	/* 0701. PAUSE------------------------------------------------------------*/
 
-	#pause {
+		#pause {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 2;
+			display: none;
+		}
 
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 320px;
-		height: 480px;
-		background-color: rgba( 0, 0, 0, 0.9 );
-		text-align: center;
-		z-index: 2;
-		display: none;
-	}
+	/* 0702. ABOUT------------------------------------------------------------*/
 
-/* ABOUT ------------------------------------------------------------------- */
+		#about {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 2;
+			display: none;
+		}
 
-	#about {
+	/* 0703. GAME OVER--------------------------------------------------------*/
 
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 320px;
-		height: 480px;
-		background-color: rgba( 0, 0, 0, 0.9 );
-		text-align: center;
-		z-index: 2;
-		display: none;
-	}
+		#gameOver {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 3;
+			display: none;
+		}
 
-/* GAME OVER ------------------------------------------------------------------- */
+		#gameOver button {
+			border: none;
+			text-transform: uppercase;
+			padding: 10px 20px;
+			margin:10px;
+			color: white;
+			font-weight: bold;
+		}
 
-	#gameOver {
+		#gameOver button.yes {
+			background: green;
+			border-bottom: darkgreen 3px solid;
+		}
 
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 320px;
-		height: 480px;
-		background-color: rgba( 0, 0, 0, 0.9 );
-		text-align: center;
-		z-index: 3;
-		display: none;
-	}
+		#gameOver button.no {
+			background: red;
+			border-bottom: darkred 3px solid;
+		}
 
-	button {
+		#newRecord {
+			text-transform: uppercase;
+			font-weight: bold;
+			color: gold;
+		}
 
-		border: none;
-		text-transform: uppercase;
-		padding: 10px 20px;
-		margin:10px;
-		color: white;
-		font-weight: bold;
-	}
+/* 08. SIDEBARS---------------------------------------------------------------*/
 
-	button.yes {
+	/* 0801. LEFT-------------------------------------------------------------*/
 
-		background-color: green;
-		border-bottom: darkgreen 3px solid;
-	}
+		#leftSidebar {
+		    display: none;
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+		    background: #1366A1;
+			padding: 25px;
+			overflow: auto;
+			font-family: monospace;
+		}
 
-	button.no {
+	/* 0802. RIGHT------------------------------------------------------------*/
 
-		background-color: red;
-		border-bottom: darkred 3px solid;
-	}
+		#rightSidebar {
+		    display: none;
+			position: absolute;
+			top: 0;
+			right: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+		    background: #1366A1;
+			padding: 25px;
+			overflow: auto;
+			font-family: monospace;
+		}
 
-	#newRecord {
+	/* 0803. APP CONSOLE------------------------------------------------------*/
 
-		text-transform: uppercase;
-		font-weight: bold;
-		color: gold;
-	}
+		#appConsole {
+		    display: none;
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+			border: white 1px solid;
+			padding: 10px;
+			overflow: hidden;
+			word-break: break-all;
+		    background: black;
+		    z-index: 4;
+		}
 
-/* APP CONSOLE ------------------------------------------------------------------- */
-
-#appConsole {
-
-    display: none;
-	position: absolute;
-	top: 0;
-	left: 320px;
-	width: 300px;
-	height: 450px;
-	color: white;
-	border: white 1px dashed;
-	padding: 10px;
-	overflow: auto;
-	word-break: break-all;
-    background-color: black;
-    z-index: 4;
-}
-
-/* SIDEBARS ------------------------------------------------------------------- */
-
-#leftSidebar {
-
-    display: none;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 270px;
-	height: 430px;
-	color: white;
-    background-color: #1366A1;
-	margin: -235px 0 0 -480px;
-	padding: 25px;
-	overflow: auto;
-	font-family: monospace;
-}
-
-#rightSidebar {
-
-    display: none;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 270px;
-	height: 430px;
-	color: white;
-    background-color: #1366A1;
-	margin: -235px 0 0 160px;
-	padding: 25px;
-	overflow: auto;
-	font-family: monospace;
-}
-
-/* FRAME ------------------------------------------------------------------- */
+/* 09. FRAME------------------------------------------------------------------*/
 
     #frame {
-
         display: none;
         position: absolute;
-        top: 70px;
+        top: 0;
         left: 0;
-        width: 320px;
-        height: 420px;
-        background-color: white;
-        background-image: url(img/load.gif);
-        background-repeat: no-repeat;
-        background-position: center center;
+        width: 100%;
+        height: 100%;
+        background: white
+					url(img/load.gif)
+        			no-repeat
+        			center center;
         z-index: 5;
     }
 
     #frameClose {
-
         position: absolute;
         top:0;
         right:0;
@@ -397,111 +401,90 @@ iframe {
         z-index: 6;
     }
 
-/* ICONS ------------------------------------------------------------------- */
+/* 10. CLASSES----------------------------------------------------------------*/
 
-.icon {
+	/* 1001. ICONS -----------------------------------------------------------*/
 
-    margin: 5px;
-}
+		.icon {
+		    margin: 5px;
+		}
 
-/* TEXT ------------------------------------------------------------------- */
+	/* 1002. TEXT ------------------------------------------------------------*/
 
-.txt12 {
+		.txt12 {
+			font-size: 12px;
+		}
 
-	font-size: 12px;
-}
+		.txt14 {
+			font-size: 14px;
+		}
 
-.txt14 {
+		.txt16 {
+			font-size: 16px;
+		}
 
-	font-size: 14px;
-}
+		.txt18 {
+			font-size: 18px;
+		}
 
-.txt16 {
+		.txt24 {
+			font-size: 24px;
+		}
 
-	font-size: 16px;
-}
+		.txt32 {
+			font-size: 32px;
+		}
 
-.txt18 {
+		.white {
+			color: white !important;
+		}
 
-	font-size: 18px;
-}
+		.hide {
+			visibility: hidden;
+		}
 
-.txt24 {
+		.show {
+			visibility: visible;
+		}
 
-	font-size: 24px;
-}
+		.tleft {
+		    text-align: left;
+		}
 
-.txt32 {
+		.tright {
+		    text-align: right;
+		}
 
-	font-size: 32px;
-}
+		.tcenter {
+		    text-align: center;
+		}
 
-.white {
-	color: white !important;
-}
+	/* 1003. PADDINGS --------------------------------------------------------*/
 
-.hide {
-	visibility: hidden;
-}
+		.paddingH10 {
+		    padding: 0 10%;
+		}
 
-.show {
-	visibility: visible;
-}
+		.paddingH25 {
+		    padding: 0 25%;
+		}
 
-.tleft {
-    text-align: left;
-}
+/* 11. SCREENS----------------------------------------------------------------*/
 
-.tright {
-    text-align: right;
-}
+	/* 1101. SCREEN WIDTH EQUAL OR GREATER THAN 960px-------------------------*/
 
-.tcenter {
-    text-align: center;
-}
+		@media ( min-width: 960px ) {
+		    #game {
+		        left: 50%;
+		        top: 50%;
+		        margin: -235px 0 0 -160px;
+		    }
 
-/* TEXT ------------------------------------------------------------------- */
+		    #rightSidebar {
+		        display: block;
+		    }
 
-.paddingH10 {
-
-    padding: 0 10%;
-}
-
-.paddingH25 {
-
-    padding: 0 25%;
-}
-
-/* SCREEN WIDTH EQUAL OR GREATER THAN 960px -------------------------------------------------------------- */
-
-@media ( min-width: 960px ) {
-
-    #game,
-    #appConsole,
-    #frame {
-
-        left: 50%;
-        top: 50%;
-        margin: -235px 0 0 -160px;
-    }
-
-    #appConsole {
-
-        margin: -235px 0 0 160px;
-    }
-
-    #frame {
-
-        margin: -180px 0 0 -160px;
-    }
-
-    #rightSidebar {
-
-        display: block;
-    }
-
-    #leftSidebar {
-
-        display: block;
-    }
-}
+		    #leftSidebar {
+		        display: block;
+		    }
+		}

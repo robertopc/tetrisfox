@@ -9,6 +9,10 @@
 
     <link rel="stylesheet" type="text/css" href="styles.css">
 
+    <script>
+        window.version = '1.1.0';
+    </script>
+
     <!-- Localization -->
     <script type="application/javascript" src="js/l10n.min.js"></script>
     <script type="application/javascript" src="js/localizations.js"></script>
@@ -17,6 +21,8 @@
 <body>
 
     <section id="load">
+
+        <noscript>Error: Disable Javascript</noscript>
 
         <img src="img/logo.svg" id="logo">
 
@@ -111,14 +117,14 @@
 
                 <img src="img/github.svg" align="middle" class="icon">
 
-                <a href="https://github.com/robertopc/tetrisfox" class="white" target="_blank">https://github.com/robertopc/tetrisfox</a>
+                  <a href="https://github.com/robertopc/tetrisfox" class="white" target="_blank" data-l10n="repository">Github</a>
 
             </p>
 
-            <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://soundjay.com" class="white" target="frameLink">http://soundjay.com</a></p>
+            <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://soundjay.com" class="white" target="frameLink">soundjay</a></p>
 
-            <p class="txt16"><span data-l10n-id="like-it-keep-a-review">Like it? Keep a review</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="here" target="frameLink">here</a></p>
-            <p class="txt16"><span data-l10n-id="version">version</span> 1.1.0</p>
+            <p class="txt16"><span data-l10n-id="like-it">Like it?</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="keep-a-review" target="frameLink">Keep a review</a></p>
+            <p class="txt16"><span data-l10n-id="version">version</span></p>
             <p class="txt16">&nbsp;</p>
             <p class="txt16">I &#9829; Sabrina</p>
 
@@ -137,51 +143,54 @@
 
         </div>
 
-    </section>
+        <section id="frame">
 
-    <section id="appConsole"></section>
+            <div id="frameClose"></div>
 
-    <section id="leftSidebar">
+            <iframe src="" name="frameLink" id="frameLink" width="100%" height="100%"></iframe>
 
-        <p class="txt18" data-l10n-id="use-keyboard-to-play">Use keyboard to play</p>
+        </section>
 
-        <p class="txt24"><kbd>&#8592;</kbd> <span data-l10n-id="move-left">move left</span></p>
-        <p class="txt24"><kbd>&#8594;</kbd> <span data-l10n-id="move-right">move right</p>
-        <p class="txt24"><kbd>&#8593;</kbd> <span data-l10n-id="or">or</span> <kbd>space</kbd> <span data-l10n-id="to-rotate">to rotate</span></p>
-        <p class="txt24"><kbd>&#8595;</kbd> <span data-l10n-id="move-down">move down</span></p>
 
-    </section>
+        <section id="leftSidebar">
 
-    <section id="rightSidebar">
+            <p class="txt18" data-l10n-id="use-keyboard-to-play">Use keyboard to play</p>
 
-        <p class="txt16">
-            <img src="img/github.svg" align="middle" class="icon">
-            <a href="https://github.com/robertopc/tetrisfox" class="white">https://github.com/robertopc/tetrisfox</a>
-        </p>
-        <p class="txt16">&nbsp;</p>
-        <p class="txt16 tcenter"><span data-l10n-id="version">version</span> 1.1.0</p>
-        <p class="txt16">&nbsp;</p>
-        <p class="txt16">
+            <p class="txt24"><kbd>&#8592;</kbd> <span data-l10n-id="move-left">move left</span></p>
+            <p class="txt24"><kbd>&#8594;</kbd> <span data-l10n-id="move-right">move right</p>
+            <p class="txt24"><kbd>&#8593;</kbd> <span data-l10n-id="or">or</span> <kbd>space</kbd> <span data-l10n-id="to-rotate">to rotate</span></p>
+            <p class="txt24"><kbd>&#8595;</kbd> <span data-l10n-id="move-down">move down</span></p>
 
-            <img src="https://avatars3.githubusercontent.com/u/1685216?v=3&s=60" style="float:left; border: white 1px solid; margin-right: 5px">
+        </section>
 
-            <a href="https://github.com/robertopc" class="white">RobertoPC</a><br>maintains <a href="https://github.com/robertopc/tetrisfox" class="white">TetrisFOX</a>
-        </p>
-        <p class="txt16">&nbsp;</p>
-        <p class="txt16 tleft">
+        <section id="rightSidebar">
 
-            <img src="img/twitter.svg" align="middle" class="icon">
-            <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>
+            <div id="windowClose"></div>
 
-        </p>
+            <p class="txt16">
+                <img src="img/github.svg" align="middle" class="icon">
+                <a href="https://github.com/robertopc/tetrisfox" class="white" data-l10n="repository">Github</a>
+            </p>
+            <p class="txt16">&nbsp;</p>
+            <p class="txt16"><span data-l10n-id="version">version</span></p>
+            <p class="txt16">&nbsp;</p>
+            <p class="txt16">
 
-    </section>
+                <img data-src="https://avatars3.githubusercontent.com/u/1685216?v=3&s=60" style="float:left; border: white 1px solid; margin-right: 5px">
 
-    <section id="frame">
+                <a href="https://github.com/robertopc" class="white">RobertoPC</a><br>maintains <a href="https://github.com/robertopc/tetrisfox" class="white">TetrisFOX</a>
+            </p>
+            <p class="txt16">&nbsp;</p>
+            <p class="txt16 tleft">
 
-        <div id="frameClose"></div>
+                <img src="img/twitter.svg" align="middle" class="icon">
+                <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>
 
-        <iframe src="" name="frameLink" id="frameLink" width="100%" height="100%"></iframe>
+            </p>
+
+        </section>
+
+        <section id="appConsole"></section>
 
     </section>
 

@@ -42,10 +42,7 @@ LIMIT 10*/
                               VALUES( '{$device_id}', {$record}, {$country}, NOW() )", $con );
 
                 // check if there was the register
-                if( mysql_affected_rows( $con ) != 1 ) {
-
-                    $device_id = '';
-                }
+                $device_id = ( mysql_affected_rows( $con ) != 1 )? '' : $device_id ;
 
             } while( $device_id == '' );
 

@@ -8,9 +8,10 @@ String.toLocaleString({
         "%about": "About",
         "%developed-by": "developed by RobertoPC",
         "%soundfx-by": "SoundFX by",
-        "%like-it-keep-a-review": "Like it? Keep a review",
+        "%like-it": "Like it?",
+        "%keep-a-review": "Keep a review",
         "%here": "here",
-        "%version": "version",
+        "%version": "version "+ window.version,
         "%game-over": "Game Over",
         "%new-record": "New Record",
         "%wish-start-a-new-game": "Wish start a new game?",
@@ -22,7 +23,8 @@ String.toLocaleString({
         "%or": "or",
         "%to-rotate": "rotate",
         "%move-down": "down",
-        "%next": "Next"
+        "%next": "Next",
+        "%repository": "Repository"
     },
     "pt-BR": {
         "%level": "Nivel",
@@ -33,9 +35,10 @@ String.toLocaleString({
         "%about": "Sobre",
         "%developed-by": "desenvolvido por RobertoPC",
         "%soundfx-by": "Sons por",
-        "%like-it-keep-a-review": "Gostou? Deixe um review",
+        "%like-it": "Gostou?",
+        "%keep-a-review": "Deixe um review",
         "%here": "aqui",
-        "%version": "versão",
+        "%version": "versão "+ window.version,
         "%game-over": "Fim do Jogo",
         "%new-record": "Novo Recorde",
         "%wish-start-a-new-game": "Deseja iniciar um novo jogo?",
@@ -47,7 +50,8 @@ String.toLocaleString({
         "%or": "ou",
         "%to-rotate": "rodar",
         "%move-down": "desce",
-        "%next": "Próxima"
+        "%next": "Próxima",
+        "%repository": "Repositório"
     },
     "es": {
         "%level": "Nivel",
@@ -58,9 +62,10 @@ String.toLocaleString({
         "%about": "Acerca",
         "%developed-by": "desarrolladas por RobertoPC",
         "%soundfx-by": "SoundFX por",
-        "%like-it-keep-a-review": "¿Te gusta? Mantenga una opinión",
+        "%like-it": "¿Te gusta?",
+        "%keep-a-review": "Mantenga una opinión",
         "%here": "aquí",
-        "%version": "versión",
+        "%version": "versión "+ window.version,
         "%game-over": "Fin del Juego",
         "%new-record": "Nuevo registro",
         "%wish-start-a-new-game": "¿Comenzar un nuevo juego?",
@@ -72,6 +77,7 @@ String.toLocaleString({
         "%or": "o",
         "%to-rotate": "girar",
         "%move-down": "abajo",
-        "%next": "Siguiente"
+        "%next": "Siguiente",
+        "%repository": "Repositório"
     }
 });

@@ -6,28 +6,45 @@
     Version     : 1.1.0
 
     Modification log:
-    ; XX Jan 2015 - 1.1.0
+    ; 30 Jun 2015 - 1.1.0
     ; * Changed l10n script
     ; * Changed height of screen
     ; * Changed images PNG for SVG
     ; * Added ranking
-    ; * Added close button for desktop browser
+    ; * Added close button for desktop application
     ; * Added load screen
+    ; * Improved source
+    ; * Automatized load screen fadeout
     ; 26 Dez 2014 - 1.0.0
     ; * Initial Release
 */
+(function(){
 
-// VARIABLES ---------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// HELPERS ---------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
+var w = window,
+    d = document,
+    s = localStorage;
+
+function id( value ) {
+    return d.getElementById( value );
+}
+
+// -----------------------------------------------------------------------------
+// VARIABLES -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // set up animation object
-var requestAnimationFrame = window.requestAnimationFrame ||
-                            window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame ||
-                            window.msRequestAnimationFrame;
+var requestAnimationFrame = w.requestAnimationFrame ||
+                            w.mozRequestAnimationFrame ||
+                            w.webkitRequestAnimationFrame ||
+                            w.msRequestAnimationFrame;
 
 // debug object
 var debug = {
-                active            : false, // enable/disable debug
+                active            : true, // enable/disable debug
                 randomPieceReturn : null   // set manually the random pieces ( 0 - 6 ), if null no set piece
             };
 
@@ -38,16 +55,14 @@ var settings = {
                 about: false
             };
 
-var blockSize = 20; // size of the block in pixels
-
 // current piece object
 var currentPiece =  {
-                    matrix    : null,  // matrix of the piece
-                    x         : null,  // coordinate X of the piece in grid
-                    y         : null,  // coordinate Y of the piece in grid
-                    r         : null,  // quantity of rows
-                    c         : null,  // quantity of columns
-                    reachedEnd : false // flag for set if piece are in the end of the grid
+                    m : null,  // matrix of the piece
+                    x : null,  // coordinate X of the piece in grid
+                    y : null,  // coordinate Y of the piece in grid
+                    r : null,  // quantity of rows
+                    c : null,  // quantity of columns
+                    e : false // flag for set if piece are in the end of the grid
                 };
 
 // next piece object
@@ -55,6 +70,9 @@ var nextPiece = null;
 
 // time of the step in milliseconds
 var stepTime = 500;
+
+// timer counter
+var timer = 0;
 
 // game loop
 var loopId   = null;
@@ -65,50 +83,62 @@ var firsTime = true;
 var lastStepTime = 0;
 
 // canvas game
-var canvasScreen = document.getElementById( 'screen' );
+var canvasScreen = id( 'screen' );
     canvasScreen = canvasScreen.getContext( '2d' );
 
+var blockSize = 20; // size of the block in pixels
+
 // canvas next piece
-var canvasNextPiece = document.getElementById( 'screenNextPiece' );
+var canvasNextPiece = id( 'screenNextPiece' );
     canvasNextPiece = canvasNextPiece.getContext( '2d' );
 
-// color Palette
-var colors = [ 'white', 'red', 'orange', 'gold', 'green', 'blue', 'indigo', 'violet', 'black' ];
+// color palette
+var colors = [
+                'white',
+                'red',
+                'orange',
+                'gold',
+                'green',
+                'blue',
+                'indigo',
+                'violet',
+                'black'
+             ];
 
 // initialize grid matrix
 var grid = {
-                matrix : [
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0],
-                            [0,0,0,0,0,0,0,0,0,0]
-                         ],
+                m : [
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0]
+                    ],
                 r : 20, // rows
                 c : 10  // columns
             };
 
 // initialize next piece grid matrix
 var gridnextPiece = {
-                        matrix: [
-                                    [0,0,0,0,0],
-                                    [0,0,0,0,0]
-                                ],
+                        m : [
+                            [0,0,0,0,0],
+                            [0,0,0,0,0]
+                            ],
                         r : 2, // rows
                         c : 5  // columns
                       };
@@ -155,30 +185,26 @@ var currentLevel = 1;
 var rows = 0;
 
 // get record from localstorage
-var record = ( localStorage.getItem('record') != null )? localStorage.getItem('record') : 0 ;
+var record = ( s.getItem('record') != null )? s.getItem('record') : 0 ;
 
 // control of key downs
 var keyDowns = [];
 
-// END VARIABLES ------------------------------------------------
-
-
-
-// FUNCTIONS --------------------------------------------------------
+// -----------------------------------------------------------------------------
+// FUNCTIONS -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // main function of the game
 function main() {
 
-    // if not paused
     if( ! settings.pause ) {
 
-        // set game record
-        setRecord();
+        setRecord(); // set game record
 
         // if not iniatilized the current piece
         // or if the same came to end
         // if true, randomize a new piece
-        if( currentPiece.matrix == null || currentPiece.reachedEnd ) {
+        if( currentPiece.m == null || currentPiece.e ) {
 
             // fixed the piece in grid
             drawPiece( true );
@@ -197,11 +223,11 @@ function main() {
             // randomize next piece
             nextPiece = randomPiece();
 
-            // set quantity of rows of the piece
-            currentPiece.l = mLines( currentPiece.matrix );
+            // set quantity of rows of piece
+            currentPiece.l = mLines( currentPiece.m );
 
-            // set quantity of columns of the piece
-            currentPiece.c = mColumns( currentPiece.matrix );
+            // set quantity of columns of piece
+            currentPiece.c = mColumns( currentPiece.m );
 
             // set the Y of the piece like quantity of rows * -1
             // for that piece starting out of the grid
@@ -214,8 +240,8 @@ function main() {
             // add score of the piece
             addScore( 10 );
 
-            // set flag
-            currentPiece.reachedEnd = false;
+            // set end flag
+            currentPiece.e = false;
         }
 
         // move automatically the piece for down
@@ -232,15 +258,19 @@ function main() {
             appConsoleClear();
             appConsole( 'Step Time : '+ stepTime );
             appConsole( 'Y : '+ currentPiece.y + ' X : '+ currentPiece.x );
-            appConsole( JSON.stringify( grid.matrix )
-                                .replace( /\],\[/g , '<br>' )
-                                .replace( '[[' , '' )
-                                .replace( ']]', '' )
-                                .replace(/,/g,' ')
-                                .replace(/ (\-[0-9]+)/g, '$1') );
+            appConsole( JSON.stringify( grid.m )
+                            .replace( /\],\[/g , ' |<br>| ' )
+                            .replace( '[[' , '' )
+                            .replace( ']]', ' |' )
+                            .replace(/,/g,' ')
+                            .replace(/^/g,'| ')
+                            .replace(/0/g,'.')
+                            .replace(/\s+?(\-[0-9]+)/g, '$1')
+                            .replace(/-/g,' ')
+            );
         }
     }
-} // end Main
+}//Main
 
 function mainLoop() {
 
@@ -255,8 +285,20 @@ function mainLoop() {
 
         // if first time
         if( firsTime ) {
-        
+
             playSFX('background');
+
+            // timer counter
+            w.setInterval(function(){
+
+                if( ! settings.pause ) {
+
+                    timer++;
+
+                    addScore(1);
+                }
+
+            }, 1000);
         }
 
         main();
@@ -269,8 +311,6 @@ function mainLoop() {
     loopId = requestAnimationFrame( mainLoop );
 }
 
-// FUNCTIONS -------------------------------------------------
-
 // draw the game grid
 // fill the blocks with respectives colors
 // with the colors of the colors matrix
@@ -281,7 +321,7 @@ function drawGrid() {
         for( var c = 0; c < grid.c; c++ ) {
 
             // set the index of the used color
-            var colorIndex = ( grid.matrix[ l ][ c ] < 0 )? grid.matrix[ l ][ c ] * -1: grid.matrix[ l ][ c ] ;
+            var colorIndex = ( grid.m[ l ][ c ] < 0 )? grid.m[ l ][ c ] * -1: grid.m[ l ][ c ] ;
 
             // set the color name and stripe white columns pair
             var color = ( colors[ colorIndex ] == 'white' && c % 2 == 0 )? '#f0f0f0' : colors[ colorIndex ] ;
@@ -295,7 +335,7 @@ function drawGrid() {
             canvasScreen.strokeRect( c * blockSize, l * blockSize, blockSize, blockSize );
         }
     }
-} // end drawGrid
+}//drawGrid
 
 // clean the current grid
 function cleanGrid() {
@@ -305,11 +345,11 @@ function cleanGrid() {
         for( var c = 0; c < grid.c; c++ ) {
 
             // fill indexes with zero
-            grid.matrix[ l ][ c ] = 0;
+            grid.m[ l ][ c ] = 0;
         }
     }
 
-} // end cleanGrid
+}//cleanGrid
 
 // draw in grid the current piece
 function drawPiece( fixPiece ) {
@@ -324,10 +364,10 @@ function drawPiece( fixPiece ) {
         for( var c = 0; c < grid.c; c++ ) {
 
             // if is positive, fill with zero
-            if( grid.matrix[ l ][ c ] > 0 ) {
+            if( grid.m[ l ][ c ] > 0 ) {
 
                 // fill with 0, index of the color white
-                grid.matrix[ l ][ c ] = 0;
+                grid.m[ l ][ c ] = 0;
             }
 
             // calculate for that the piece stay centered
@@ -335,30 +375,30 @@ function drawPiece( fixPiece ) {
             if( l >= currentPiece.y && ( l - currentPiece.y + 1 ) <= currentPiece.l  && c >= currentPiece.x && ( c - currentPiece.x + 1 ) <= currentPiece.c ) {
 
                 // if not 0(white)
-                if( currentPiece.matrix[ l - currentPiece.y ][ c - currentPiece.x ] != 0 ) {
+                if( currentPiece.m[ l - currentPiece.y ][ c - currentPiece.x ] != 0 ) {
 
                     // draw piece in grid
-                    grid.matrix[ l ][ c ] = currentPiece.matrix[ l - currentPiece.y ][ c - currentPiece.x ];
+                    grid.m[ l ][ c ] = currentPiece.m[ l - currentPiece.y ][ c - currentPiece.x ];
 
                     // if fixPiece is true
                     // multiply value of the index by -1
                     // else, multiply by 1
-                    grid.matrix[ l ][ c ] *= fixPiece;
+                    grid.m[ l ][ c ] *= fixPiece;
                 }
             }
         }
     }
 
-} // end drawPiece
+}//drawPiece
 
 // draw next piece grid
 function drawNextPiece() {
 
     // set the quantity of rows
-    nextPiece.l = mLines( nextPiece.matrix );
+    nextPiece.l = mLines( nextPiece.m );
 
     // set the quantity of columns
-    nextPiece.c = mColumns( nextPiece.matrix );
+    nextPiece.c = mColumns( nextPiece.m );
 
     // clear canvas
     canvasNextPiece.clearRect( 0, 0, 100, 80 );
@@ -369,7 +409,7 @@ function drawNextPiece() {
         for( var c = 0; c < nextPiece.c; c++ ) {
 
             // get color of piece
-            var color = colors[ nextPiece.matrix[ l ][ c ] ];
+            var color = colors[ nextPiece.m[ l ][ c ] ];
 
             var x = ( 100 / 2 ) + c * blockSize - ( nextPiece.c / 2 ) * blockSize;
             var y = ( 40 / 2 ) + l * blockSize - ( nextPiece.l / 2 ) * blockSize;
@@ -388,7 +428,7 @@ function drawNextPiece() {
         }
     }
 
-} // end drawNextPiece
+}//drawNextPiece
 
 // random and return the piece
 function randomPiece() {
@@ -401,57 +441,60 @@ function randomPiece() {
 
     // return piece object
     return {
-               matrix : Piece,
-               r      : null,
-               c      : null,
-               y      : null,
-               x      : null
+               m : Piece,
+               r : null,
+               c : null,
+               y : null,
+               x : null
            };
-} // end randomPiece
+}//randomPiece
 
 // verify how many rows have the matrix
-function mLines( matrix ) {
+function mLines( m ) {
 
-    return matrix.length;
-} // end mLines
+    return m.length;
+}//mLines
 
 // verify how many columns have the matrix
-function mColumns( matrix ) {
+function mColumns( m ) {
 
-    return matrix[0].length;
-} // end mColumns
+    return m[0].length;
+}//mColumns
 
 // application console
 function appConsole( value ) {
 
     // show div appConsole
-    document.getElementById('appConsole').style.display = 'block';
+    id('appConsole').style.display = 'block';
 
-    document.getElementById('appConsole').innerHTML += "<p>"+ value +"</p>";
-} // end appConsole
+    id('appConsole').innerHTML += "<p>"+ value +"</p>";
+}//appConsole
 
 // clear application console
 function appConsoleClear() {
 
-    document.getElementById('appConsole').innerHTML = '';
-} // end appConsoleClear
+    id('appConsole').innerHTML = '';
+}//appConsoleClear
 
-// ACTIONS -------------------------------------------------
+// -----------------------------------------------------------------------------
+// ACTIONS ---------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // move down the piece
 function moveDown() {
 
     // if the piece don't exceed the grid verticaly
-    if( canMove( currentPiece.x,(currentPiece.y + 1), currentPiece.matrix  ) )  {
+    if( canMove( currentPiece.x,(currentPiece.y + 1), currentPiece.m  ) )  {
 
         // iterate Y for the piece down automatically
         currentPiece.y++;
 
     } else {
 
-        currentPiece.reachedEnd = true;
+        // set end flag
+        currentPiece.e = true;
     }
-} // end moveDown
+}//moveDown
 
 // move down the piece quickly
 function moveDownFast( event ) {
@@ -478,13 +521,13 @@ function moveDownFast( event ) {
         stepTime = lastStepTime;
     }
 
-} // end moveDownFast
+}//moveDownFast
 
 // move left the piece
 function moveLeft() {
 
     // if piece can move for left
-    if( canMove( currentPiece.x - 1, currentPiece.y, currentPiece.matrix ) ) {
+    if( canMove( currentPiece.x - 1, currentPiece.y, currentPiece.m ) ) {
 
         // show pressed button
         buttonPressed('left');
@@ -494,13 +537,13 @@ function moveLeft() {
 
         currentPiece.x--;
     }
-} // moveLeft
+}//moveLeft
 
 // move right the piece
 function moveRight() {
 
     // if piece can move for right
-    if( canMove( currentPiece.x + 1, currentPiece.y, currentPiece.matrix  ) ) {
+    if( canMove( currentPiece.x + 1, currentPiece.y, currentPiece.m  ) ) {
 
         // show pressed button
         buttonPressed('right');
@@ -531,7 +574,7 @@ function rotatePiece() {
                 // fórmula que dá o efeito de rotação 90º horário
                 var cr = (currentPiece.l - 1) - c;
 
-                newPosition[ l ][ c ] = currentPiece.matrix[ cr ][ l ];
+                newPosition[ l ][ c ] = currentPiece.m[ cr ][ l ];
             }
         }
 
@@ -551,56 +594,52 @@ function rotatePiece() {
             currentPiece.c = mColumns( newPosition );
 
             // insert the new piece
-            currentPiece.matrix = newPosition;
+            currentPiece.m = newPosition;
         }
     }
-} // end rotatePiece
+}//rotatePiece
 
 // verify if piece can move for the new position
 function canMove( x, y, position ) {
 
     // if current piece not reached the end
-    if( ! currentPiece.reachedEnd ) {
+    if( ! currentPiece.e ) {
 
-        // if in vertical limits
-        //if( y >= 0  ) {
+        // if minor than grid height
+        if( ( y + mLines( position ) ) < ( grid.r + 1 ) ) {
 
-            // if minor than grid height
-            if( ( y + mLines( position ) ) < ( grid.r + 1 ) ) {
+            for( var l = 0, lc = mLines( position ); l < lc; l++ ) {
+                for( var c = 0, cc = mColumns( position ); c < cc; c++ ) {
 
-                for( var l = 0, lc = mLines( position ); l < lc; l++ ) {
-                    for( var c = 0, cc = mColumns( position ); c < cc; c++ ) {
-
-                        // verify if occured some colision
-                        if(
-                            position[ l ][ c ] != 0 &&
+                    // verify if occured some colision
+                    if(
+                        position[ l ][ c ] != 0 &&
+                        (
+                            ( y + l ) >= 0 && // if positive index
                             (
-                                ( y + l ) >= 0 && // if positive index
-                                (
-                                    grid.matrix[ y + l ][ x + c ] == undefined || // if undefined, is out of the limits of the matrix
-                                    grid.matrix[ y + l ][ x + c ] < 0 // if colide with other piece
-                                )
+                                grid.m[ y + l ][ x + c ] == undefined || // if undefined, is out of the limits of the matrix
+                                grid.m[ y + l ][ x + c ] < 0 // if colide with other piece
                             )
-                            ){
+                        )
+                        ){
 
-                            return false;
-                        }
+                        return false;
                     }
                 }
-
-                return true;
-
-            } else {
-
-                return false;
             }
-        //}
+
+            return true;
+
+        } else {
+
+            return false;
+        }
 
         return true;
     }
 
     return false;
-} // end canMove
+}//canMove
 
 // verify complete rows
 function verifyRows() {
@@ -617,12 +656,12 @@ function verifyRows() {
         for( var c = 0; c < grid.c; c++ ) {
 
             // verify columns of the row
-            if( grid.matrix[ l ][ c ] < 0 ) {
+            if( grid.m[ l ][ c ] < 0 ) {
 
                 columnsFilled++;
             } else {
 
-                if( grid.matrix[ l ][ c ] == 0 ) {
+                if( grid.m[ l ][ c ] == 0 ) {
 
                     columnsEmpty++;
                 } else {
@@ -658,7 +697,7 @@ function verifyRows() {
 
                 for( var c = 0; c < grid.c; c++ ) {
 
-                    grid.matrix[ lp ][ c ] = grid.matrix[ pl ][ c ];
+                    grid.m[ lp ][ c ] = grid.m[ pl ][ c ];
                 }
 
                 lp--;
@@ -677,14 +716,14 @@ function togglePause() {
     settings.pause = ! settings.pause;
 
     // if paused, stop the audio
-    settings.audio = ( settings.pause ) ? false : true ;
+    settings.audio = ! settings.pause;
 
     // if paused, show pause div
-    document.getElementById('pause').style.display = ( settings.pause ) ? 'block' : 'none' ;
+    id('pause').style.display = ( settings.pause ) ? 'block' : 'none' ;
 
     // put below/above buttons
-    document.getElementById('buttonAbout').style.zIndex = ( settings.pause ) ? 0 : 3 ;
-    document.getElementById('buttonRanking').style.zIndex = ( settings.pause ) ? 0 : 3 ;
+    id('buttonAbout').style.zIndex = ( settings.pause ) ? 0 : 3 ;
+    id('buttonRanking').style.zIndex = ( settings.pause ) ? 0 : 3 ;
 
 } // togglePause
 
@@ -695,16 +734,16 @@ function toggleAbout() {
     settings.about = ! settings.about;
 
     // pause game
-    settings.pause = ( settings.about ) ? true : false ;
+    settings.pause = settings.about;
 
     // show about div
-    document.getElementById('about').style.display = ( settings.about ) ? 'block' : 'none' ;
+    id('about').style.display = ( settings.about ) ? 'block' : 'none' ;
 
     // put buttons above/below
-    document.getElementById('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
-    document.getElementById('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    id('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    id('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
 
-} // end toggleAbout
+}//toggleAbout
 
 // toggle state of the ranking
 function toggleRanking() {
@@ -713,16 +752,16 @@ function toggleRanking() {
     settings.about = ! settings.about;
 
     // pause game
-    settings.pause = ( settings.about ) ? true : false ;
+    settings.pause = settings.about;
 
     // show about div
-    document.getElementById('about').style.display = ( settings.about ) ? 'block' : 'none' ;
+    id('about').style.display = ( settings.about ) ? 'block' : 'none' ;
 
     // put buttons above/below
-    document.getElementById('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
-    document.getElementById('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    id('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    id('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
 
-} // end toggleRanking
+}//toggleRanking
 
 // toggle state of the audio
 function toggleAudio() {
@@ -734,21 +773,21 @@ function toggleAudio() {
     if( settings.audio ) {
 
         // play it
-        document.getElementById('backgroundAudio').play();
+        id('backgroundAudio').play();
 
         // insert image of audio on
-        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-on.svg)';
+        id('buttonAudio').style.backgroundImage = 'url(img/button-audio-on.svg)';
 
     } else {
 
         // pause it
-        document.getElementById('backgroundAudio').pause();
+        id('backgroundAudio').pause();
 
         // insert image of audio off
-        document.getElementById('buttonAudio').style.backgroundImage = 'url(img/button-audio-off.svg)';
+        id('buttonAudio').style.backgroundImage = 'url(img/button-audio-off.svg)';
     }
 
-} // end toggleAudio
+}//toggleAudio
 
 // play sound effects
 function playSFX( effect ) {
@@ -760,43 +799,45 @@ function playSFX( effect ) {
 
             case'background':
 
-                document.getElementById('backgroundAudio').play();
+                id('backgroundAudio').play();
 
                 break;
 
             case'complete-row':
 
-                document.getElementById('soundfxCompleteRow').play();
+                id('soundfxCompleteRow').play();
 
                 break;
 
             case'game-over':
 
-                document.getElementById('soundfxGameOver').play();
+                id('soundfxGameOver').play();
 
                 break;
         }
     }
 
-} // end playSFX
+}//playSFX
 
 // add score
 function addScore( points ) {
+
+  console.log( points );
 
     score += points;
 
     level = Math.floor( score / 1000 ) + 1;
 
     // set the score
-    document.getElementById('scorePoints').innerHTML = score;
+    id('scorePoints').innerHTML = score;
 
     // set the current level
-    document.getElementById('scoreLevel').innerHTML = level;
+    id('scoreLevel').innerHTML = level;
 
     // complete row
     if( points == 100 ) {
 
-        document.getElementById('scoreLines').innerHTML = ++rows;
+        id('scoreLines').innerHTML = ++rows;
     }
 
     // verify level, case change increase speed
@@ -809,13 +850,15 @@ function addScore( points ) {
         // if true, decrease 50ms in last step time
         if( lastStepTime / stepTime == 10 ) {
 
-            lastStepTime -= 50;
-        }
+          lastStepTime -= 50;
+          stepTime     -= 5;
 
-        // decrease 50ms of the time per level
-        stepTime -= 50;
+        } else {
+
+          stepTime -= 50;
+        }
     }
-} // end addScore
+}//addScore
 
 // verifiy game over
 function wasGameOver() {
@@ -834,31 +877,31 @@ function wasGameOver() {
             record = score;
 
             // set record
-            localStorage.setItem( 'record', record );
+            s.setItem( 'record', record );
 
             // show record div
-            document.getElementById('newRecord').style.visibility = 'visible';
+            id('newRecord').style.visibility = 'visible';
         } else {
 
             // hide record div
-            document.getElementById('newRecord').style.visibility = 'hidden';
+            id('newRecord').style.visibility = 'hidden';
         }
 
         // show div of game over
-        document.getElementById('gameOver').style.display = 'block';
+        id('gameOver').style.display = 'block';
 
         // insert pontuation
-        document.getElementById('gameOverScore').innerHTML = score;
+        id('gameOverScore').innerHTML = score;
 
     }
 
-} // end wasGameOver
+}//wasGameOver
 
 // set record of game
 function setRecord() {
 
-    document.getElementById('scoreRecord').innerHTML = record;
-} // end setRecord
+    id('scoreRecord').innerHTML = record;
+}//setRecord
 
 // show pressed buttons
 function buttonPressed( button ) {
@@ -868,43 +911,43 @@ function buttonPressed( button ) {
 
         case'down':
 
-            document.getElementById( 'buttonDown' ).style.backgroundImage = 'url(img/button-down-pressed.svg)';
+            id( 'buttonDown' ).style.backgroundImage = 'url(img/button-down-pressed.svg)';
 
             break;
 
         case'down-release':
 
-            document.getElementById( 'buttonDown' ).style.backgroundImage = 'url(img/button-down.svg)';
+            id( 'buttonDown' ).style.backgroundImage = 'url(img/button-down.svg)';
 
             break;
 
         default:
 
             // insert button pressed image
-            document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '-pressed.svg)';
+            id( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '-pressed.svg)';
 
             // hide button pressed image after few moment
-            window.setTimeout( function() {
+            w.setTimeout( function() {
 
-                document.getElementById( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '.svg)';
+                id( 'button' + capitalize( button ) ).style.backgroundImage = 'url(img/button-' + button + '.svg)';
 
             }, 300 );
     }
-} // end buttonPressed
+}//buttonPressed
 
 // capitalize
 function capitalize( value ) {
 
     return value.charAt(0).toUpperCase() + value.slice(1);
-} // end capitalize
+}//capitalize
 
 // show link in frame
 function openLink() {
 
     toggleAudio();
 
-    document.getElementById('frameLink').src = '';
-    document.getElementById('frameDiv').style.display = 'block';
+    id('frameLink').src = '';
+    id('frame').style.display = 'block';
 } // openLink
 
 // hide open link
@@ -912,103 +955,106 @@ function closeLink() {
 
     toggleAudio();
 
-    document.getElementById('frameDiv').style.display = 'none';
-} // end closeLink
+    id('frame').style.display = 'none';
+}//closeLink
 
-// END FUNCTIONS -------------------------------------------
-
-// EVENTS BEGIN -------------------------------------------------
+// -----------------------------------------------------------------------------
+// MOBILE EVENTS ---------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // LEFT BUTTON PRESSED
-document.getElementById('buttonLeft').ontouchstart = function() {
+id('buttonLeft').ontouchstart = function() {
 
     moveLeft();
 }
 
 // RIGHT BUTTON PRESSED
-document.getElementById('buttonRight').ontouchstart = function() {
+id('buttonRight').ontouchstart = function() {
 
     moveRight();
 }
 
 // ROTATE BUTTON PRESSED
-document.getElementById('buttonRotate').ontouchstart = function() {
+id('buttonRotate').ontouchstart = function() {
 
     rotatePiece();
 }
 
 // DOWN BUTTON PRESSED
-document.getElementById('buttonDown').ontouchstart = function() {
+id('buttonDown').ontouchstart = function() {
 
     moveDownFast( 'pressed' );
 }
 
 // DOWN BUTTON RELEASE
-document.getElementById('buttonDown').ontouchend = function() {
+id('buttonDown').ontouchend = function() {
 
     moveDownFast( 'release' );
 }
 
-// END MOBILE EVENTS -------------------------------------------------
+// -----------------------------------------------------------------------------
+// DESKTOP EVENTS --------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // PAUSE BUTTON PRESSED
-document.getElementById('buttonPause').onclick = function() {
+id('buttonPause').onclick = function() {
 
     togglePause();
 }
 
 // AUDIO BUTTON PRESSED
-document.getElementById('buttonAudio').onmousedown = function() {
+id('buttonAudio').onmousedown = function() {
 
     toggleAudio();
 }
 
 // PAUSE BUTTON PRESSED
-document.getElementById('buttonAbout').onclick = function() {
+id('buttonAbout').onclick = function() {
 
     toggleAbout();
 }
 
 // REPEAT YES BUTTON PRESSED
-document.getElementById('buttonRepeatYes').onclick = function() {
+id('buttonRepeatYes').onclick = function() {
 
     cleanGrid();
 
     // reset variables
     level        = 1;
+    currentLevel = 1;
     score        = 0;
     rows         = 0;
     stepTime     = 500;
     lastStepTime = 0;
     currentPiece = {
-                        matrix: null,
-                        x     : null,
-                        y     : null,
-                        r     : null,
-                        c     : null,
+                        m : null,
+                        x : null,
+                        y : null,
+                        r : null,
+                        c : null,
                     };
 
     // hide game over div
-    document.getElementById('gameOver').style.display = 'none';
+    id('gameOver').style.display = 'none';
 
     // reset view
-    document.getElementById('scorePoints').innerHTML = 0;
-    document.getElementById('scoreLevel').innerHTML  = 1;
-    document.getElementById('scoreLines').innerHTML  = 0;
+    id('scorePoints').innerHTML = 0;
+    id('scoreLevel').innerHTML  = 1;
+    id('scoreLines').innerHTML  = 0;
 
     // remove pause
     settings.pause = false;
 }
 
 // REPEAT NO BUTTON PRESSED
-document.getElementById('buttonRepeatNo').onclick = function() {
+id('buttonRepeatNo').onclick = function() {
 
     // close the application
-    window.close();
+    w.close();
 }
 
 // WHEN KEY PRESSED
-window.onkeydown = function( event ) {
+w.onkeydown = function( event ) {
 
     var keyCode = event.keyCode || event.which;
 
@@ -1053,7 +1099,7 @@ window.onkeydown = function( event ) {
 }
 
 // WHEN KEY RELEASE
-window.onkeyup = function( event ) {
+w.onkeyup = function( event ) {
 
     var keyCode = event.keyCode || event.which;
 
@@ -1072,31 +1118,33 @@ window.onkeyup = function( event ) {
 }
 
 // catch all frame links
-var links = document.querySelectorAll('a[target="frameLink"]');
+var links = d.querySelectorAll('a[target="frameLink"]');
 
 for( var i = 0, l = links.length; i < l; i++ ) {
 
     // When click in frame link
-    document.querySelectorAll('a[target="frameLink"]')[ i ].onclick = function() {
+    d.querySelectorAll('a[target="frameLink"]')[ i ].onclick = function() {
 
         openLink();
     }
 }
 
 // When click in close button
-document.getElementById('frameClose').onclick = function() {
+id('frameClose').onclick = function() {
 
     closeLink();
 }
 
 // When click in ranking button
-document.getElementById('buttonRanking').onclick = function() {
+id('buttonRanking').onclick = function() {
 
     // if online
     if( navigator.onLine ) {
 
+        alert('OnLine');
+
         //  if not setted, set 0
-        var device_id = localStorage.getItem('device_id') || '';
+        var device_id = s.getItem('device_id') || '';
 
         var xmlhttp = new XMLHttpRequest();
 
@@ -1111,45 +1159,45 @@ document.getElementById('buttonRanking').onclick = function() {
                 console.log( response );
 
                 // set the data
-                localStorage.setItem( 'device_id', response.device_id );
-                localStorage.setItem( 'position', response.position );
-                localStorage.setItem( 'country', response.country );
+                s.setItem( 'device_id', response.device_id );
+                s.setItem( 'position', response.position );
+                s.setItem( 'country', response.country );
             }
         }
 
-        xmlhttp.open( "get", "http://localhost/tetrisfox/backend/ranking.php?token=TETRISFOX&device_id="+ device_id +'&record=' + record , true );
+        xmlhttp.open( "get", "http://localhost/firefoxos/tetrisfox/backend/ranking.php?token=TETRISFOX&device_id="+ device_id +'&record=' + record , true );
         xmlhttp.send();
 
     } else {
 
-        settins.pause = true;
+        settings.pause = true;
 
         alert('Offline');
     }
 }
 
-// When localization loaded start the loop
-window.onload = function() {
+// when DOM and localization loaded, start the loop
+w.onload = function() {
 
     // callback for translate strings
     var l = function (string) {
         return string.toLocaleString();
     };
 
-    // get localization strings
-    var strings = document.querySelectorAll('*[data-l10n-id]');
+    // get strings
+    var strings = d.querySelectorAll('*[data-l10n-id]');
 
-    for( s in strings ) {
-
-        // if dont have attributes
-        if( strings[ s ].attributes == undefined ) {
-            break;
-        }
+    for( var i = 0,len = strings.length; i < len; i++ ) {
 
         // translate the string
-        strings[ s ].innerHTML = l( '%' + strings[ s ].getAttribute("data-l10n-id") );
+        strings[ i ].innerHTML = l( '%' + strings[ i ].getAttribute("data-l10n-id") );
     }
+
+    // fadeout load screen
+    id('load').style.animation = 'fadeout 1s 1s 1 forwards';
 
     // initialize main loop
     mainLoop();
 }
+
+})();
