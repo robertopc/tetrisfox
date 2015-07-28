@@ -20,8 +20,10 @@
  *     1001. ICONS
  *     1002. TEXT
  *     1003. PADDINGS
+ *     1004. OTHERS
  * 11. SCREENS
  *     1101. SCREENS => 960
+ *     1102. SCREENS <= 768
  */
 
 /* 01. HTML-------------------------------------------------------------------*/
@@ -118,13 +120,14 @@
 
 	#game {
 		position: absolute;
-	    left: 0;
-	    top: 0;
-		width: 320px;
-		height: 480px;
-		background-image: url('img/background.svg');
-	    background-repeat: no-repeat;
-	    background-size: 100% 100%;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		background: url(img/background.svg) no-repeat bottom center;
 	}
 
 /* 04. CANVAS-----------------------------------------------------------------*/
@@ -136,25 +139,25 @@
 	}
 
     #nextPiece {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-		width: 100px;
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
         text-transform: uppercase;
     }
 
 	#screenNextPiece {
-		position: absolute;
-		top: 40px;
-		right: 5px;
+		float: right;
+		clear: both;
         background: rgba( 0, 0, 0, 0 );
+		margin: 0.5rem;
 	}
 
 	#info {
-		position: absolute;
-		top: 100px;
-		right: 5px;
-		width: 100px;
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
 		text-transform: uppercase;
 	}
 
@@ -165,10 +168,11 @@
 /* 05. SETTINGS---------------------------------------------------------------*/
 
 	#settings	{
-		position: absolute;
-		top: 290px;
-		right: 5px;
-		width: 100px;
+		position: relative;
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
 		height: 100px;
 	}
 
@@ -205,6 +209,17 @@
 			z-index: 3;
 		}
 
+		#buttonRanking {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 46px;
+			height: 46px;
+			background-image: url('img/button-ranking.svg');
+			background-repeat: no-repeat;
+			z-index: 3;
+		}
+
 /* 06. BUTTONS----------------------------------------------------------------*/
 
 	#buttons {
@@ -213,17 +228,23 @@
 		left: 0;
 		width: 100%;
 		height: auto;
+		text-align: center;
+		/*-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
+		-o-transform: translateX(-50%);
+		transform: translateX(-50%);*/
 	}
 		.buttonRound {
-            float: left;
 			text-align: center;
 			font-size: 50px;
 			line-height: 50px;
-            width: 60px;
-            height: 60px;
-            margin: 0 10px 0 10px;
+            width: 64px;
+            height: 64px;
+			background-color: transparent;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+			border: 0;
             box-sizing: border-box;
 		}
 
@@ -245,7 +266,7 @@
 
 /* 07. POPUPS-----------------------------------------------------------------*/
 
-	/* 0701. PAUSE------------------------------------------------------------*/
+	/* 0701. PAUSE--------------------------------------------------------------*/
 
 		#pause {
 			position: absolute;
@@ -259,7 +280,7 @@
 			display: none;
 		}
 
-	/* 0702. ABOUT------------------------------------------------------------*/
+	/* 0702. ABOUT--------------------------------------------------------------*/
 
 		#about {
 			position: absolute;
@@ -273,7 +294,7 @@
 			display: none;
 		}
 
-	/* 0703. GAME OVER--------------------------------------------------------*/
+	/* 0703. GAME OVER----------------------------------------------------------*/
 
 		#gameOver {
 			position: absolute;
@@ -314,7 +335,7 @@
 
 /* 08. SIDEBARS---------------------------------------------------------------*/
 
-	/* 0801. LEFT-------------------------------------------------------------*/
+	/* 0801. LEFT---------------------------------------------------------------*/
 
 		#leftSidebar {
 		    display: none;
@@ -330,7 +351,7 @@
 			font-family: monospace;
 		}
 
-	/* 0802. RIGHT------------------------------------------------------------*/
+	/* 0802. RIGHT--------------------------------------------------------------*/
 
 		#rightSidebar {
 		    display: none;
@@ -346,7 +367,7 @@
 			font-family: monospace;
 		}
 
-	/* 0803. APP CONSOLE------------------------------------------------------*/
+	/* 0803. APP CONSOLE--------------------------------------------------------*/
 
 		#appConsole {
 		    display: none;
@@ -393,13 +414,13 @@
 
 /* 10. CLASSES----------------------------------------------------------------*/
 
-	/* 1001. ICONS -----------------------------------------------------------*/
+	/* 1001. ICONS -------------------------------------------------------------*/
 
 		.icon {
 		    margin: 5px;
 		}
 
-	/* 1002. TEXT ------------------------------------------------------------*/
+	/* 1002. TEXT --------------------------------------------------------------*/
 
 		.txt12 {
 			font-size: 12px;
@@ -449,7 +470,7 @@
 		    text-align: center;
 		}
 
-	/* 1003. PADDINGS --------------------------------------------------------*/
+	/* 1003. PADDINGS ----------------------------------------------------------*/
 
 		.paddingH10 {
 		    padding: 0 10%;
@@ -459,15 +480,44 @@
 		    padding: 0 25%;
 		}
 
+	/* 1004. OTHERS ------------------------------------------------------------*/
+
+		.floatleft {
+			float: left;
+		}
+
+		.clearleft {
+			clear: left;
+		}
+
+		.by-robertopc {
+			position: absolute;
+			bottom: 12px;
+			right: 0;
+		}
+
+		.by {
+			float: left;
+			height: 48px;
+			line-height: 48px;
+			padding: 0 6px;
+		}
+
+		.gravatar {
+			float: left;
+			width: 48px;
+			height: 48px;
+			border-radius: 30px;
+		}
+
 /* 11. SCREENS----------------------------------------------------------------*/
 
 	/* 1101. SCREEN WIDTH EQUAL OR GREATER THAN 960px-------------------------*/
 
 		@media ( min-width: 960px ) {
 		    #game {
-		        left: 50%;
-		        top: 50%;
-		        margin: -235px 0 0 -160px;
+				width: 320px;
+				height: 480px;
 		    }
 
 		    #rightSidebar {
@@ -477,4 +527,12 @@
 		    #leftSidebar {
 		        display: block;
 		    }
+		}
+
+	/* 1102. SCREEN WIDTH LOWER THAN 960px---------------------------*/
+		@media ( max-width: 959px ) {
+		    #game {
+				width: 100%;
+				height: 100%;
+			}
 		}

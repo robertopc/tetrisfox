@@ -23,175 +23,208 @@
 // HELPERS ---------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
-var w = window,
-    d = document,
-    s = localStorage;
-
 function id( value ) {
-    return d.getElementById( value );
+    return document.getElementById( value );
 }
 
 // -----------------------------------------------------------------------------
 // VARIABLES -------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
+var
+
+w = window,
+d = document,
+s = localStorage,
+
 // set up animation object
-var requestAnimationFrame = w.requestAnimationFrame ||
-                            w.mozRequestAnimationFrame ||
-                            w.webkitRequestAnimationFrame ||
-                            w.msRequestAnimationFrame;
+requestAnimationFrame = w.requestAnimationFrame ||
+                        w.mozRequestAnimationFrame ||
+                        w.webkitRequestAnimationFrame ||
+                        w.msRequestAnimationFrame,
 
 // debug object
-var debug = {
-                active            : true, // enable/disable debug
-                randomPieceReturn : null   // set manually the random pieces ( 0 - 6 ), if null no set piece
-            };
+debug = {
+    active            : false, // enable/disable debug
+    randomPieceReturn : null   // set manually the random pieces ( 0 - 6 ), if null no set piece
+},
 
 // game settings
-var settings = {
-                pause: false,
-                audio: true,
-                about: false
-            };
+settings = {
+    pause: false,
+    audio: true,
+    about: false
+},
 
 // current piece object
-var currentPiece =  {
-                    m : null,  // matrix of the piece
-                    x : null,  // coordinate X of the piece in grid
-                    y : null,  // coordinate Y of the piece in grid
-                    r : null,  // quantity of rows
-                    c : null,  // quantity of columns
-                    e : false // flag for set if piece are in the end of the grid
-                };
+currentPiece =  {
+    m : null,  // matrix of the piece
+    x : null,  // coordinate X of the piece in grid
+    y : null,  // coordinate Y of the piece in grid
+    r : null,  // quantity of rows
+    c : null,  // quantity of columns
+    e : false // flag for set if piece are in the end of the grid
+},
 
 // next piece object
-var nextPiece = null;
+nextPiece = null,
 
 // time of the step in milliseconds
-var stepTime = 500;
-
-// timer counter
-var timer = 0;
+stepTime = 500,
 
 // game loop
-var loopId   = null;
-var start    = false;
-var firsTime = true;
+loopId   = null,
+start    = false,
+firsTime = true,
 
 // flag for the last step time
-var lastStepTime = 0;
+lastStepTime = 0,
+
+// window size
+windowWidth = w.innerWidth || w.clientWidth,
+windowHeight = w.innerHeight || w.clientHeight,
+
+// if window greater than mobile, reduce size
+windowWidth = ( windowWidth < 960 )? windowWidth : 320 ,
+windowHeight = ( windowWidth != 320 )? windowHeight : 480 ,
 
 // canvas game
-var canvasScreen = id( 'screen' );
-    canvasScreen = canvasScreen.getContext( '2d' );
-
-var blockSize = 20; // size of the block in pixels
+canvasScreen = id( 'screen' ),
+canvasScreen = canvasScreen.getContext( '2d' ),
 
 // canvas next piece
-var canvasNextPiece = id( 'screenNextPiece' );
-    canvasNextPiece = canvasNextPiece.getContext( '2d' );
+canvasNextPiece = id( 'screenNextPiece' ),
+canvasNextPiece = canvasNextPiece.getContext( '2d' ),
+
+// block sizes
+blockSizeWidth = windowWidth * 0.0625, // width of the block in pixels
+blockSizeHeight =  windowHeight * (0.0833 / 2), // height of the block in pixels
 
 // color palette
-var colors = [
-                'white',
-                'red',
-                'orange',
-                'gold',
-                'green',
-                'blue',
-                'indigo',
-                'violet',
-                'black'
-             ];
+colors = [
+    'white',
+    'red',
+    'orange',
+    'gold',
+    'green',
+    'blue',
+    'indigo',
+    'violet',
+    'black'
+],
 
 // initialize grid matrix
-var grid = {
-                m : [
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0],
-                    [0,0,0,0,0,0,0,0,0,0]
-                    ],
-                r : 20, // rows
-                c : 10  // columns
-            };
+grid = {
+    m : [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0]
+        ],
+    r : 20, // rows
+    c : 10  // columns
+},
 
 // initialize next piece grid matrix
-var gridnextPiece = {
-                        m : [
-                            [0,0,0,0,0],
-                            [0,0,0,0,0]
-                            ],
-                        r : 2, // rows
-                        c : 5  // columns
-                      };
+gridnextPiece = {
+    m : [
+        [0,0,0,0,0],
+        [0,0,0,0,0]
+        ],
+    r : 2, // rows
+    c : 5  // columns
+},
 
 // matrix with the shapes of the pieces
-var pieces = [
-                    [
-                        [1,1],// ##
-                        [1,1] // ##
-                    ],
-                    [
-                        [0,0,2],//   #
-                        [2,2,2] // ###
-                    ],
-                    [
-                        [3,0,0],// #
-                        [3,3,3] // ###
-                    ],
-                    [
-                        [4,4,0],// ##
-                        [0,4,4] //  ##
-                    ],
-                    [
-                        [0,5,5],//  ##
-                        [5,5,0] // ##
-                    ],
-                    [
-                        [0,6,0],//  #
-                        [6,6,6] // ###
-                    ],
-                    [
-                        [7,7,7,7]// ####
-                    ]
-                ];
+pieces = [
+    [
+        [1,1],// ##
+        [1,1] // ##
+    ],
+    [
+        [0,0,2],//   #
+        [2,2,2] // ###
+    ],
+    [
+        [3,0,0],// #
+        [3,3,3] // ###
+    ],
+    [
+        [4,4,0],// ##
+        [0,4,4] //  ##
+    ],
+    [
+        [0,5,5],//  ##
+        [5,5,0] // ##
+    ],
+    [
+        [0,6,0],//  #
+        [6,6,6] // ###
+    ],
+    [
+        [7,7,7,7]// ####
+    ]
+],
 
 // store the score of the game
-var score = 0;
+score = 0,
 
 // store the current level
-var level = 1;
-var currentLevel = 1;
+level = 1,
+currentLevel = 1,
 
 // count of rows
-var rows = 0;
+rows = 0,
 
 // get record from localstorage
-var record = ( s.getItem('record') != null )? s.getItem('record') : 0 ;
+record = ( s.getItem('record') != null )? s.getItem('record') : 0 ,
 
 // control of key downs
-var keyDowns = [];
+keyDowns = [],
 
 // -----------------------------------------------------------------------------
 // FUNCTIONS -------------------------------------------------------------------
 // -----------------------------------------------------------------------------
+
+// main visibility API function
+// use visibility API to check if current tab is active or not
+// source http://greensock.com/forums/topic/9059-cross-browser-to-detect-tab-or-window-is-active-so-animations-stay-in-sync-using-html5-visibility-api/
+vis = (function(){
+    var stateKey,
+        eventKey,
+        keys = {
+                hidden: "visibilitychange",
+                webkitHidden: "webkitvisibilitychange",
+                mozHidden: "mozvisibilitychange",
+                msHidden: "msvisibilitychange"
+    };
+    for (stateKey in keys) {
+        if (stateKey in document) {
+            eventKey = keys[stateKey];
+            break;
+        }
+    }
+    return function(c) {
+        if (c) document.addEventListener(eventKey, c);
+        return !document[stateKey];
+    }
+})();//vis
 
 // main function of the game
 function main() {
@@ -285,18 +318,28 @@ function mainLoop() {
         // if first time
         if( firsTime ) {
 
+            id( 'screen' ).setAttribute('width', windowWidth * 0.625);
+            id( 'screen' ).setAttribute('height', windowHeight * 0.833);
+
             playSFX('background');
+
+            // window active monitor
+            w.setInterval(function(){
+
+                if( ! settings.pause ) {
+
+                    // if window inactive
+                    if( ! vis() ) togglePause(true);
+                }
+            }, 500);
 
             // timer counter
             w.setInterval(function(){
 
                 if( ! settings.pause ) {
 
-                    timer++;
-
                     addScore(1);
                 }
-
             }, 1000);
         }
 
@@ -327,11 +370,11 @@ function drawGrid() {
 
             // fill the filled blocks
             canvasScreen.fillStyle = color;
-            canvasScreen.fillRect( c * blockSize, l * blockSize, blockSize, blockSize );
+            canvasScreen.fillRect( c * blockSizeWidth, l * blockSizeHeight, blockSizeWidth, blockSizeHeight );
 
             // stroke the filled blocks
             canvasScreen.strokeStyle = 'white';
-            canvasScreen.strokeRect( c * blockSize, l * blockSize, blockSize, blockSize );
+            canvasScreen.strokeRect( c * blockSizeWidth, l * blockSizeHeight, blockSizeWidth, blockSizeHeight );
         }
     }
 }//drawGrid
@@ -410,18 +453,18 @@ function drawNextPiece() {
             // get color of piece
             var color = colors[ nextPiece.m[ l ][ c ] ];
 
-            var x = ( 100 / 2 ) + c * blockSize - ( nextPiece.c / 2 ) * blockSize;
-            var y = ( 40 / 2 ) + l * blockSize - ( nextPiece.l / 2 ) * blockSize;
+            var x = ( 100 / 2 ) + c * 20 - ( nextPiece.c / 2 ) * 20;
+            var y = ( 40 / 2 ) + l * 20 - ( nextPiece.l / 2 ) * 20;
 
             // fill filled blocks
             if( color != 'white' ) {
 
                 canvasNextPiece.fillStyle = color;
-                canvasNextPiece.fillRect( x, y, blockSize, blockSize );
+                canvasNextPiece.fillRect( x, y, 20, 20 );
 
                 // stroke filled blocks
-                canvasNextPiece.strokeStyle = 'white';
-                canvasNextPiece.strokeRect( x, y, blockSize, blockSize );
+                canvasNextPiece.strokeStyle = '#1366A1';
+                canvasNextPiece.strokeRect( x, y, 20, 20 );
             }
 
         }
@@ -709,13 +752,13 @@ function verifyRows() {
 } // verifyRows
 
 // toggle state of the pause
-function togglePause() {
+function togglePause( flag ) {
 
     // toggle pause
-    settings.pause = ! settings.pause;
+    settings.pause = ( typeof flag != 'string' )? flag : ! settings.pause;
 
     // if paused, stop the audio
-    settings.audio = ! settings.pause;
+    toggleAudio( settings.audio && ! settings.pause );
 
     // if paused, show pause div
     id('pause').style.display = ( settings.pause ) ? 'block' : 'none' ;
@@ -734,6 +777,9 @@ function toggleAbout() {
     // pause game
     settings.pause = settings.about;
 
+    // pause audio
+    toggleAudio( settings.audio && ! settings.about );
+
     // show about div
     id('about').style.display = ( settings.about ) ? 'block' : 'none' ;
 
@@ -743,10 +789,10 @@ function toggleAbout() {
 }//toggleAbout
 
 // toggle state of the audio
-function toggleAudio() {
+function toggleAudio( flag ) {
 
     // toggle audio
-    settings.audio = ! settings.audio;
+    settings.audio = ( typeof flag != 'string' )? flag : ! settings.audio;
 
     // if audio on
     if( settings.audio ) {
@@ -800,8 +846,6 @@ function playSFX( effect ) {
 
 // add score
 function addScore( points ) {
-
-  console.log( points );
 
     score += points;
 
@@ -923,16 +967,12 @@ function capitalize( value ) {
 // show link in frame
 function openLink() {
 
-    toggleAudio();
-
     id('frameLink').src = '';
     id('frame').style.display = 'block';
 } // openLink
 
 // hide open link
 function closeLink() {
-
-    toggleAudio();
 
     id('frame').style.display = 'none';
 }//closeLink
@@ -978,13 +1018,13 @@ id('buttonDown').ontouchend = function() {
 // PAUSE BUTTON PRESSED
 id('buttonPause').onclick = function() {
 
-    togglePause();
+    togglePause('');
 }
 
 // AUDIO BUTTON PRESSED
 id('buttonAudio').onmousedown = function() {
 
-    toggleAudio();
+    toggleAudio('');
 }
 
 // PAUSE BUTTON PRESSED
@@ -1114,6 +1154,46 @@ id('frameClose').onclick = function() {
     closeLink();
 }
 
+// window resize function
+var resize = function() {
+
+    // window size
+    windowWidth = w.innerWidth || w.clientWidth;
+    windowHeight = w.innerHeight || w.clientHeight;
+
+    // if window greater than mobile, reduce size
+    windowWidth = ( windowWidth < 960 )? windowWidth : 320;
+    windowHeight = ( windowWidth != 320 )? windowHeight : 480;
+
+    // increase body font
+    id('body').style.fontSize = windowWidth / 20 +'px';
+
+    // adjust sizes
+    id('nextPiece').style.width       = ( windowWidth / 20 ) * 6 + 'px';
+    id('screenNextPiece').style.width = ( windowWidth / 20 ) * 6 + 'px';
+    id('info').style.width            = ( windowWidth / 20 ) * 6 + 'px';
+    id('settings').style.width        = ( windowWidth / 20 ) * 6 + 'px';
+
+
+
+
+    // aqui
+
+
+
+
+    // block sizes
+    blockSizeWidth = windowWidth * 0.0625, // width of the block in pixels
+    blockSizeHeight =  windowHeight * (0.0833 / 2), // height of the block in pixels
+
+    // resize canvas
+    id( 'screen' ).setAttribute('width', windowWidth * 0.625);
+    id( 'screen' ).setAttribute('height', windowHeight * 0.833);
+}
+
+// when window resize
+w.onresize = resize;
+
 // when DOM and localization loaded, start the loop
 w.onload = function() {
 
@@ -1130,6 +1210,9 @@ w.onload = function() {
         // translate the string
         strings[ i ].innerHTML = l( '%' + strings[ i ].getAttribute("data-l10n-id") );
     }
+
+    // trigger resize for adjust sizes
+    resize();
 
     // fadeout load screen
     id('load').style.animation = 'fadeout 1s 1s 1 forwards';
