@@ -9,9 +9,7 @@
 
     <link rel="stylesheet" type="text/css" href="styles.css">
 
-    <script>
-        window.version = '1.1.0';
-    </script>
+    <script> window.version = '1.1.0'; </script>
 
     <!-- Localization -->
     <script type="application/javascript" src="js/l10n.min.js"></script>
@@ -73,45 +71,45 @@
 
         <div id="settings">
 
-            <div id="buttonPause"></div>
+            <div id="buttonPause" class="buttonSettings"></div>
 
-            <div id="buttonAudio"></div>
+            <div id="buttonAudio" class="buttonSettings"></div>
 
-            <div id="buttonAbout"></div>
+            <div id="buttonAbout" class="buttonSettings"></div>
 
         </div>
 
         <div id="buttons">
 
-            <button id="buttonLeft" class="buttonRound"></button>
+            <div id="buttonLeft" class="buttonRound"></div>
 
-            <button id="buttonDown" class="buttonRound"></button>
+            <div id="buttonDown" class="buttonRound"></div>
 
-            <button id="buttonRotate" class="buttonRound"></button>
+            <div id="buttonRotate" class="buttonRound"></div>
 
-            <button id="buttonRight" class="buttonRound"></button>
+            <div id="buttonRight" class="buttonRound"></div>
 
         </div>
 
         <div id="pause">
 
-            <p class="txt32" data-l10n-id="paused">PAUSED</p>
+            <p class="title" data-l10n-id="paused">PAUSED</p>
 
         </div>
 
         <div id="about">
 
-            <p class="txt32" data-l10n-id="about">ABOUT</p>
-            <p class="txt16" data-l10n-id="developed-by">developed by RobertoPC</p>
+            <p class="title" data-l10n-id="about">ABOUT</p>
+            <p data-l10n-id="developed-by">developed by RobertoPC</p>
 
-            <p class="txt16 tcenter paddingH10">
+            <p class="tcenter paddingH10">
 
                 <img src="img/twitter.svg" align="middle" class="icon">
 
                 <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>
             </p>
 
-            <p class="txt16 tcenter paddingH10">
+            <p class="tcenter paddingH10">
 
                 <img src="img/github.svg" align="middle" class="icon">
 
@@ -119,60 +117,49 @@
 
             </p>
 
-            <p class="txt16"><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://soundjay.com" class="white" target="frameLink">soundjay</a></p>
+            <p><span data-l10n-id="soundfx-by">Soundfx by</span> <a href="http://soundjay.com" class="white" target="_blank">soundjay</a></p>
 
-            <p class="txt16"><span data-l10n-id="like-it">Like it?</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="keep-a-review" target="frameLink">Keep a review</a></p>
-            <p class="txt16"><span data-l10n-id="version">version</span></p>
-            <p class="txt16">&nbsp;</p>
-            <p class="txt16">I &#9829; Sabrina</p>
+            <p><span data-l10n-id="like-it">Like it?</span> <a href="https://marketplace.firefox.com/app/tetrisfox/ratings/add" class="white" data-l10n-id="keep-a-review" target="_blank">Keep a review</a></p>
+            <p><span data-l10n-id="version">version</span></p>
+            <p>&nbsp;</p>
+            <p>I &#9829; Sabrina</p>
 
         </div>
 
         <div id="gameOver">
 
-            <p class="txt32" data-l10n-id="game-over">Game Over</p>
-            <p class="txt16"></p>
-            <p class="txt16"><span data-l10n-id="score">Score</span>: <span id="gameOverScore"></span></p>
-            <p class="txt16"></p>
-            <p class="txt16 hide" id="newRecord">* <span data-l10n-id="new-record">New Record</span> *</p>
-            <p class="txt16"></p>
-            <p class="txt16" data-l10n-id="wish-start-a-new-game">Wish start a new game?</p>
-            <p class="txt16"><button id="buttonRepeatNo" class="no" data-l10n-id="no">NO</button> <button id="buttonRepeatYes" class="yes" data-l10n-id="yes">YES</button></p>
+            <p class="title" data-l10n-id="game-over">Game Over</p>
+            <p></p>
+            <p><span data-l10n-id="score">Score</span>: <span id="gameOverScore"></span></p>
+            <p></p>
+            <p class="hide" id="newRecord">* <span data-l10n-id="new-record">New Record</span> *</p>
+            <p></p>
+            <p data-l10n-id="wish-start-a-new-game">Wish start a new game?</p>
+            <p><button id="buttonRepeatNo" class="no" data-l10n-id="no">NO</button> <button id="buttonRepeatYes" class="yes" data-l10n-id="yes">YES</button></p>
 
         </div>
 
-        <section id="frame">
-
-            <div id="frameClose"></div>
-
-            <iframe src="" name="frameLink" id="frameLink" width="100%" height="100%"></iframe>
-
-        </section>
-
-
         <section id="leftSidebar">
 
-            <p class="txt18" data-l10n-id="use-keyboard-to-play">Use keyboard to play</p>
+            <p data-l10n-id="use-keyboard-to-play"><small>Use keyboard to play</small></p>
 
-            <p class="txt24"><kbd>&#8592;</kbd> <span data-l10n-id="move-left">move left</span></p>
-            <p class="txt24"><kbd>&#8594;</kbd> <span data-l10n-id="move-right">move right</p>
-            <p class="txt24"><kbd>&#8593;</kbd> <span data-l10n-id="or">or</span> <kbd>space</kbd> <span data-l10n-id="to-rotate">to rotate</span></p>
-            <p class="txt24"><kbd>&#8595;</kbd> <span data-l10n-id="move-down">move down</span></p>
+            <p><kbd>&#8592;</kbd> <span data-l10n-id="move-left">move left</span></p>
+            <p><kbd>&#8594;</kbd> <span data-l10n-id="move-right">move right</p>
+            <p><kbd>&#8593;</kbd> <span data-l10n-id="or">or</span> <kbd>space</kbd> <span data-l10n-id="to-rotate">to rotate</span></p>
+            <p><kbd>&#8595;</kbd> <span data-l10n-id="move-down">move down</span></p>
 
         </section>
 
         <section id="rightSidebar">
 
-            <div id="windowClose"></div>
-
-            <p class="txt16">
+            <p>
                 <img src="img/github.svg" align="middle" class="icon">
                 <a href="https://github.com/robertopc/tetrisfox" class="white" data-l10n="repository">Github</a>
             </p>
-            <p class="txt16">&nbsp;</p>
-            <p class="txt16"><span data-l10n-id="version">version</span></p>
-            <p class="txt16">&nbsp;</p>
-            <p class="txt16 tleft">
+            <p>&nbsp;</p>
+            <p><span data-l10n-id="version">version</span></p>
+            <p>&nbsp;</p>
+            <p class="tleft">
 
                 <img src="img/twitter.svg" align="middle" class="icon">
                 <a href="https://twitter.com/robertopc0" class="white" target="_blank">@robertopc0</a>

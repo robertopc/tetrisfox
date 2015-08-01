@@ -1,8 +1,8 @@
 /*
     TetrisFOX
-    Description : The famous game Tetris made for FirefoxOS by RobertoPC
+    Description : The famous game Tetris made for FirefoxOS
     Author      : RobertoPC
-    Author URI  : http://robertopc.net
+    Author URI  : http://robertopc.com.br
     Version     : 1.1.0
 
     Modification log:
@@ -10,7 +10,6 @@
     ; * Changed l10n script
     ; * Changed height of screen
     ; * Changed images PNG for SVG
-    ; * Added close button for desktop application
     ; * Added load screen
     ; * Improved source
     ; * Automatized load screen fadeout
@@ -25,6 +24,16 @@
 
 function id( value ) {
     return document.getElementById( value );
+}
+
+function classcss( value, cssprop, cssval ) {
+
+    var elements = document.getElementsByClassName( value );
+
+    for( var i=0, len=elements.length; i < len; i++ ) {
+        // set css property to class element
+        eval( 'elements[' + i +'].style.' + cssprop + ' = "' + cssval + '";' );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -964,19 +973,6 @@ function capitalize( value ) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }//capitalize
 
-// show link in frame
-function openLink() {
-
-    id('frameLink').src = '';
-    id('frame').style.display = 'block';
-} // openLink
-
-// hide open link
-function closeLink() {
-
-    id('frame').style.display = 'none';
-}//closeLink
-
 // -----------------------------------------------------------------------------
 // MOBILE EVENTS ---------------------------------------------------------------
 // -----------------------------------------------------------------------------
@@ -1136,24 +1132,6 @@ w.onkeyup = function( event ) {
     }
 }
 
-// catch all frame links
-var links = d.querySelectorAll('a[target="frameLink"]');
-
-for( var i = 0, l = links.length; i < l; i++ ) {
-
-    // When click in frame link
-    d.querySelectorAll('a[target="frameLink"]')[ i ].onclick = function() {
-
-        openLink();
-    }
-}
-
-// When click in close button
-id('frameClose').onclick = function() {
-
-    closeLink();
-}
-
 // window resize function
 var resize = function() {
 
@@ -1174,13 +1152,14 @@ var resize = function() {
     id('info').style.width            = ( windowWidth / 20 ) * 6 + 'px';
     id('settings').style.width        = ( windowWidth / 20 ) * 6 + 'px';
 
-
-
-
-    // aqui
-
-
-
+    // buttons
+    classcss('buttonSettings', 'width', ( windowWidth / 20 ) * 3 + 'px' )
+    classcss('buttonRound', 'height', ( windowWidth / 20 ) * 4 + 'px' );
+    id('buttons').style.height              = ( windowWidth / 20 ) * 4 + 'px';
+    id('buttonLeft').style.backgroundSize   = ( windowWidth / 20 ) * 4 + 'px ' + ( windowWidth / 20 ) * 4 + 'px';
+    id('buttonDown').style.backgroundSize   = ( windowWidth / 20 ) * 4 + 'px ' + ( windowWidth / 20 ) * 4 + 'px';
+    id('buttonRotate').style.backgroundSize = ( windowWidth / 20 ) * 4 + 'px ' + ( windowWidth / 20 ) * 4 + 'px';
+    id('buttonRight').style.backgroundSize  = ( windowWidth / 20 ) * 4 + 'px ' + ( windowWidth / 20 ) * 4 + 'px';
 
     // block sizes
     blockSizeWidth = windowWidth * 0.0625, // width of the block in pixels
