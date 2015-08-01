@@ -32,7 +32,19 @@ function classcss( value, cssprop, cssval ) {
 
     for( var i=0, len=elements.length; i < len; i++ ) {
         // set css property to class element
-        eval( 'elements[' + i +'].style.' + cssprop + ' = "' + cssval + '";' );
+        switch( cssprop ) {
+            case"width":
+
+                document.getElementsByClassName( value )[i].style.width = cssval;
+
+                break;
+
+            case"height":
+
+                document.getElementsByClassName( value )[i].style.height = cssval;
+
+                break;
+        }
     }
 }
 
