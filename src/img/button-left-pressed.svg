@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="45.998871"
+   height="46"
+   id="svg5412">
+  <defs
+     id="defs5414" />
+  <metadata
+     id="metadata5417">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-1006.3622)"
+     id="layer1">
+    <path
+       d="m 22.998874,1050.7151 c 11.739087,0 21.289607,-9.5791 21.289607,-21.3532 0,-11.7735 -9.55052,-21.3526 -21.289607,-21.3526 -11.737405,0 -21.288483,9.5791 -21.288483,21.3526 0,11.7741 9.551078,21.3532 21.288483,21.3532 z"
+       id="path3268"
+       style="fill:#000000;fill-opacity:1" />
+    <path
+       d="m 10.005094,1047.5871 c -26.207118,-23.4733 48.41707,-25.5141 28.07883,-2.1821 -7.14052,8.343 -19.73747,9.3212 -28.07883,2.1821 z"
+       id="path3270"
+       style="fill:#333333;fill-opacity:1" />
+    <path
+       d="m 22.999431,1009.1169 c -11.163424,0 -20.244159,9.0819 -20.244159,20.2447 0,11.164 9.080735,20.2459 20.244159,20.2459 11.163433,0 20.244725,-9.0819 20.244725,-20.2459 0,-11.1628 -9.081292,-20.2447 -20.244725,-20.2447 m 0,-2.7547 c 12.702296,0 22.999441,10.2971 22.999441,23 0,12.7029 -10.297145,23 -22.999441,23 -12.702852,0 -22.999431,-10.2971 -22.999431,-23 8.98e-4,-12.7029 10.297145,-23 22.999431,-23 l 0,0 z"
+       id="path3274"
+       style="fill:#000000;fill-opacity:1" />
+    <path
+       d="m 30.903295,1021.1699 -3.807718,-3.8077 -12,12 12,12 3.807718,-3.8077 -8.192955,-8.193 z"
+       id="path3005"
+       style="fill:#ffffff" />
+  </g>
+</svg>

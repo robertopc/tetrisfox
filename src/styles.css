@@ -1,0 +1,474 @@
+/*
+	INDEXES
+
+	0100. HTML
+	0200. ANIMATIONS
+	0300. CONTAINERS
+	0400. CANVAS
+	0500. SETTINGS
+	0600. BUTTONS
+	0700. SETTINGS
+	      0701. PAUSE
+	      0702. ABOUT
+	      0703. GAME OVER
+	0800. SIDEBARS
+	      0801. LEFT
+	      0802. RIGHT
+	      0803. APP CONSOLE
+	0900. CLASSES
+	      0901. ICONS
+	      0902. TEXT
+	      0903. PADDINGS
+	      0904. OTHERS
+	1000. SCREENS
+	      1001. SCREENS => 960
+	      1002. SCREENS <= 768
+*/
+
+/* 0100. HTML-----------------------------------------------------------------*/
+
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	body {
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		background: #177CC5;
+		font-family: "Fira Sans", monospace;
+		font-size: 16px;
+		color: white;
+	}
+
+	canvas {
+	    background: white;
+	}
+
+	kbd {
+		background: black;
+		border: white 1px solid;
+		padding: 5px;
+		color: white;
+		border-radius: 5px;
+	}
+
+	iframe {
+	    border: none;
+	}
+
+	noscript {
+		display: block;
+		padding: 5px 0;
+		text-align: center;
+		color: #fff;
+		background: #f00;
+	}
+
+/* 0200. ANIMATIONS-----------------------------------------------------------*/
+
+	@keyframes fadeout {
+	    from {
+	        opacity: 1;
+	    }
+
+	    to {
+	        opacity: 0;
+	        top: -100%;
+	        z-index: 0;
+	    }
+	}
+
+	@keyframes giro {
+		to {
+		    transform: rotate(360deg);
+		    transform-origin: center center;
+		}
+	}
+
+/* 0300. CONTAINERS-----------------------------------------------------------*/
+
+	#load {
+		position: absolute;
+	    left: 0;
+	    top: 0;
+		width: 100%;
+		height: 100%;
+	    box-sizing: border-box;
+	    background: #177CC5;
+	    z-index: 7;
+	}
+	    #logo {
+	        position:absolute;
+	        top: 50%;
+	        left: 50%;
+	        margin: -23px 0 0 -145px ;
+	    }
+
+	    #loadsvg {
+	        position:absolute;
+	        top: 50%;
+	        left: 50%;
+	        width: 32px;
+	        height: 32px;
+	        margin: 128px 0 0 -16px ;
+	        animation: giro 1s linear infinite;
+	    }
+
+	#game {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		background: url(img/background.svg) no-repeat bottom center;
+	}
+
+/* 0400. CANVAS---------------------------------------------------------------*/
+
+	#screen {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+	}
+
+    #nextPiece {
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
+        text-transform: uppercase;
+    }
+
+	#screenNextPiece {
+		float: right;
+		clear: both;
+        background: rgba( 0, 0, 0, 0 );
+		margin: 0.5rem;
+	}
+
+	#info {
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
+		text-transform: uppercase;
+	}
+
+		#info .numbers {
+			text-align: right;
+		}
+
+/* 0500. SETTINGS-------------------------------------------------------------*/
+
+	#settings	{
+		position: relative;
+		float: right;
+		clear: both;
+		width: 6rem;
+		margin: 0.5rem;
+		height: 100px;
+	}
+
+		.buttonSettings {
+			position: relative;
+			float: left;
+			width: 3em;
+			height: 3em;
+			background-repeat: no-repeat;
+			background-size: 75% 75%;
+			background-position: center center;
+		}
+
+		#buttonPause {
+			left: 50%;
+			background-image: url('img/button-pause.svg');
+			-webkit-transform: translateX(-50%);
+			-moz-transform: translateX(-50%);
+			-ms-transform: translateX(-50%);
+			-o-transform: translateX(-50%);
+			transform: translateX(-50%);
+			z-index: 3;
+		}
+
+		#buttonAudio {
+			clear: both;
+			background-image: url('img/button-audio-on.svg');
+		}
+
+		#buttonAbout {
+			background-image: url('img/button-about.svg');
+			z-index: 3;
+		}
+
+/* 0600. BUTTONS--------------------------------------------------------------*/
+
+	#buttons {
+		position: absolute;
+		bottom: 5px;
+		left: 0;
+		width: 100%;
+		height: auto;
+		text-align: center;
+	}
+		.buttonRound {
+			float: left;
+			text-align: center;
+			font-size: 50px;
+			line-height: 50px;
+            width: 25%;
+            height: 4em;
+			background-color: transparent;
+            background-size: 50% 50%;
+			background-position: center center;
+            background-repeat: no-repeat;
+            box-sizing: border-box;
+			border: 0;
+		}
+
+        #buttonLeft {
+            background-image: url(img/button-left.svg);
+        }
+
+        #buttonDown {
+            background-image: url(img/button-down.svg);
+        }
+
+        #buttonRotate {
+            background-image: url(img/button-rotate.svg);
+        }
+
+        #buttonRight {
+            background-image: url(img/button-right.svg);
+        }
+
+/* 0700. SETTINGS-------------------------------------------------------------*/
+
+	/* 0701. PAUSE------------------------------------------------------------*/
+
+		#pause {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 2;
+			display: none;
+		}
+
+	/* 0702. ABOUT------------------------------------------------------------*/
+
+		#about {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 2;
+			display: none;
+		}
+
+	/* 0703. GAME OVER--------------------------------------------------------*/
+
+		#gameOver {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.9 );
+			text-align: center;
+			z-index: 3;
+			display: none;
+		}
+
+		#gameOver button {
+			border: none;
+			text-transform: uppercase;
+			padding: 10px 20px;
+			margin:10px;
+			color: white;
+			font-weight: bold;
+		}
+
+		#gameOver button.yes {
+			background: green;
+			border-bottom: darkgreen 3px solid;
+		}
+
+		#gameOver button.no {
+			background: red;
+			border-bottom: darkred 3px solid;
+		}
+
+		#newRecord {
+			text-transform: uppercase;
+			font-weight: bold;
+			color: gold;
+		}
+
+/* 0800. SIDEBARS-------------------------------------------------------------*/
+
+	/* 0801. LEFT-------------------------------------------------------------*/
+
+		#leftSidebar {
+		    display: none;
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+		    background: #1366A1;
+			padding: 25px;
+			overflow: auto;
+			font-family: monospace;
+		}
+
+	/* 0802. RIGHT------------------------------------------------------------*/
+
+		#rightSidebar {
+		    display: none;
+			position: absolute;
+			top: 0;
+			right: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+		    background: #1366A1;
+			padding: 25px;
+			overflow: auto;
+			font-family: monospace;
+		}
+
+	/* 0803. APP CONSOLE------------------------------------------------------*/
+
+		#appConsole {
+		    display: none;
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			color: white;
+			border: white 1px solid;
+			padding: 10px;
+			overflow: hidden;
+			word-break: break-all;
+		    background: black;
+		    z-index: 4;
+		}
+
+/* 0900. CLASSES--------------------------------------------------------------*/
+
+	/* 0901. ICONS -----------------------------------------------------------*/
+
+		.icon {
+		    margin: 5px;
+		}
+
+	/* 0902. TEXT ------------------------------------------------------------*/
+
+		.title {
+			font-size: 2em;
+		}
+
+		.white {
+			color: white !important;
+		}
+
+		.hide {
+			visibility: hidden;
+		}
+
+		.show {
+			visibility: visible;
+		}
+
+		.tleft {
+		    text-align: left;
+		}
+
+		.tright {
+		    text-align: right;
+		}
+
+		.tcenter {
+		    text-align: center;
+		}
+
+	/* 0903. PADDINGS --------------------------------------------------------*/
+
+		.paddingH10 {
+		    padding: 0 10%;
+		}
+
+		.paddingH25 {
+		    padding: 0 25%;
+		}
+
+	/* 0904. OTHERS ----------------------------------------------------------*/
+
+		.floatleft {
+			float: left;
+		}
+
+		.clearleft {
+			clear: left;
+		}
+
+		.by-robertopc {
+			position: absolute;
+			bottom: 12px;
+			right: 0;
+		}
+
+		.by {
+			float: left;
+			height: 48px;
+			line-height: 48px;
+			padding: 0 6px;
+		}
+
+		.gravatar {
+			float: left;
+			width: 48px;
+			height: 48px;
+			border-radius: 30px;
+		}
+
+/* 1000. SCREENS--------------------------------------------------------------*/
+
+	/* 1001. SCREEN WIDTH EQUAL OR GREATER THAN 960px-------------------------*/
+
+		@media ( min-width: 960px ) {
+		    #game {
+				width: 320px;
+				height: 480px;
+		    }
+
+		    #rightSidebar {
+		        display: block;
+		    }
+
+		    #leftSidebar {
+		        display: block;
+		    }
+		}
+
+	/* 1002. SCREEN WIDTH LOWER THAN 960px---------------------------*/
+		@media ( max-width: 959px ) {
+		    #game {
+				width: 100%;
+				height: 100%;
+			}
+		}
