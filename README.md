@@ -2,7 +2,7 @@ TetrisFOX
 =========
 The famous game Tetris for FirefoxOS
 
-![](https://raw.github.com/robertopc/tetrisfox/master/prints/print01.jpg)
+![](https://raw.githubusercontent.com/robertopc/tetrisfox/master/prints/print01.png)
 
 Installation
 ----------
