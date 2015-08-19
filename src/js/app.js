@@ -778,9 +778,6 @@ function togglePause( flag ) {
     // toggle pause
     settings.pause = ( typeof flag != 'string' )? flag : ! settings.pause;
 
-    // if paused, stop the audio
-    toggleAudio( settings.audio && ! settings.pause );
-
     // if paused, show pause div
     id('pause').style.display = ( settings.pause ) ? 'block' : 'none' ;
 
@@ -798,9 +795,6 @@ function toggleAbout() {
     // pause game
     settings.pause = settings.about;
 
-    // pause audio
-    toggleAudio( settings.audio && ! settings.about );
-
     // show about div
     id('about').style.display = ( settings.about ) ? 'block' : 'none' ;
 
@@ -810,10 +804,10 @@ function toggleAbout() {
 }//toggleAbout
 
 // toggle state of the audio
-function toggleAudio( flag ) {
+function toggleAudio() {
 
     // toggle audio
-    settings.audio = ( typeof flag != 'string' )? flag : ! settings.audio;
+    settings.audio = ! settings.audio;
 
     // if audio on
     if( settings.audio ) {
@@ -1032,7 +1026,7 @@ id('buttonPause').onclick = function() {
 // AUDIO BUTTON PRESSED
 id('buttonAudio').onmousedown = function() {
 
-    toggleAudio('');
+    toggleAudio();
 }
 
 // PAUSE BUTTON PRESSED
