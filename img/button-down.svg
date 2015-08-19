@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="45.998871"
+   height="46"
+   id="svg5412">
+  <defs
+     id="defs5414" />
+  <metadata
+     id="metadata5417">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-1006.3622)"
+     id="layer1">
+    <path
+       d="m 22.999392,1050.7773 c 11.80803,0 21.41464,-9.6071 21.41464,-21.4157 0,-11.8079 -9.60661,-21.4151 -21.41464,-21.4151 -11.80634,0 -21.413513,9.6072 -21.413513,21.4151 0,11.8086 9.607173,21.4157 21.413513,21.4157 z"
+       id="path3181"
+       style="fill:#00dc00;fill-opacity:1" />
+    <path
+       d="m 10.005092,1047.587 c -26.207118,-23.4732 48.41707,-25.5141 28.07883,-2.182 -7.14052,8.3429 -19.73747,9.3212 -28.07883,2.182 z"
+       id="path3183"
+       style="fill:#00b400;fill-opacity:1" />
+    <path
+       d="m 22.999432,1009.1169 c -11.16342,0 -20.24416,9.0819 -20.24416,20.2447 0,11.164 9.08074,20.2459 20.24416,20.2459 11.16343,0 20.24472,-9.0819 20.24472,-20.2459 0,-11.1628 -9.08129,-20.2447 -20.24472,-20.2447 m 0,-2.7547 c 12.70229,0 22.99944,10.2971 22.99944,23 0,12.7028 -10.29715,23 -22.99944,23 -12.70285,0 -22.999432,-10.2972 -22.999432,-23 8.98e-4,-12.7029 10.297142,-23 22.999432,-23 l 0,0 z"
+       id="path3187"
+       style="fill:#000000;fill-opacity:1" />
+    <path
+       d="m 14.807154,1021.4583 -3.807718,3.8078 12,12 12,-12 -3.807718,-3.8078 -8.192955,8.1924 z"
+       id="path6"
+       style="fill:#ffffff" />
+  </g>
+</svg>
