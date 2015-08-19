@@ -6,6 +6,8 @@
     Version     : 1.1.0
 
     Modification log:
+    ; 19 Ago 2015 - 1.1.1
+    ; * Improved source
     ; 30 Jun 2015 - 1.1.0
     ; * Changed l10n script
     ; * Changed height of screen
