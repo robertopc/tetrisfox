@@ -1,6 +1,6 @@
 TetrisFOX
 =========
-The famous game Tetris for FirefoxOS
+The famous game Tetris for FirefoxOS(HTML5 Game)
 
 ![](https://raw.githubusercontent.com/robertopc/tetrisfox/master/prints/print01.png)
 
