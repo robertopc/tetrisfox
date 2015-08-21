@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Install</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>TetrisFOX</p>
+
+    <script>
+        (function() {
+            var manifestUrl = location.href.replace("install.html","") +'manifest.webapp';
+
+            if (! navigator.mozApps.installPackage) {
+                alert("ERRO: Incompatível com seu dispositivo.");
+                return;
+            }
+
+            var req = navigator.mozApps.installPackage(manifestUrl);
+            req.onsuccess = function() { alert("Instalado."); };
+            req.onerror = function() { alert("Erro: "+this.error.name); };
+        })();
+    </script>
+</body>
+</html>
