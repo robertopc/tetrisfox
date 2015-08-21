@@ -10,13 +10,15 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 
     <script>
-        var version = '1.1.1';
+        var version = '1.2.1';
     </script>
 
     <!-- Localization -->
-    <script type="application/javascript" src="js/l10n.min.js"></script>
-    <script type="application/javascript" src="js/localizations.js"></script>
+    <script src="js/l10n.min.js"></script>
+    <script src="js/localizations.js"></script>
 
+    <!-- Firebase -->
+    <script src='js/firebase.js?v=2.2.9'></script>
 </head>
 <body id="body">
 
@@ -74,6 +76,8 @@
         <div id="settings">
 
             <div id="buttonPause" class="buttonSettings"></div>
+
+            <div id="buttonRanking" class="buttonSettings"></div>
 
             <div id="buttonAudio" class="buttonSettings"></div>
 
@@ -141,6 +145,19 @@
 
         </div>
 
+        <div id="ranking">
+
+            <p class="title">Ranking</p>
+            <p></p>
+            <div id="positions">
+                <img src="img/load.gif">
+            </div>
+            <p></p>
+            <strong data-l10n-id="your-position">Your Position</strong>
+            <div id="your-position"></div>
+
+        </div>
+
         <section id="leftSidebar">
 
             <p data-l10n-id="use-keyboard-to-play"><small>Use keyboard to play</small></p>
@@ -185,7 +202,7 @@
     </section>
 
     <!-- SCRIPTS -->
-    <script type="text/javascript" src="js/app.js"></script>
+    <script src="js/app.js"></script>
 
     <!-- AUDIOS -->
     <audio id="backgroundAudio" src="audio/korobeiniki.ogg" loop></audio>

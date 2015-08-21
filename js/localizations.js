@@ -24,7 +24,8 @@ String.toLocaleString({
         "%to-rotate": "rotate",
         "%move-down": "down",
         "%next": "Next",
-        "%repository": "Repository"
+        "%repository": "Repository",
+        "%your-position": "Your Position"
     },
     "pt-BR": {
         "%level": "Nivel",
@@ -51,7 +52,8 @@ String.toLocaleString({
         "%to-rotate": "rodar",
         "%move-down": "desce",
         "%next": "Próxima",
-        "%repository": "Repositório"
+        "%repository": "Repositório",
+        "%your-position": "Sua Posição"
     },
     "es": {
         "%level": "Nivel",
@@ -78,6 +80,7 @@ String.toLocaleString({
         "%to-rotate": "girar",
         "%move-down": "abajo",
         "%next": "Siguiente",
-        "%repository": "Repositório"
+        "%repository": "Repositório",
+        "%your-position": "Tu Posición"
     }
 });

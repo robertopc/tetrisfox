@@ -6,6 +6,8 @@
     Version     : 1.1.0
 
     Modification log:
+    ; 20 Ago 2015 - 1.2.1
+    ; * Added ranking
     ; 19 Ago 2015 - 1.1.1
     ; * Improved source
     ; 30 Jun 2015 - 1.1.0
@@ -74,9 +76,10 @@ debug = {
 
 // game settings
 settings = {
-    pause: false,
-    audio: true,
-    about: false
+    pause  : false,
+    audio  : true,
+    about  : false,
+    ranking: false
 },
 
 // current piece object
@@ -785,8 +788,94 @@ function togglePause( flag ) {
 
     // put below/above buttons
     id('buttonAbout').style.zIndex = ( settings.pause ) ? 0 : 3 ;
+    id('buttonRanking').style.zIndex = ( settings.pause ) ? 0 : 3 ;
 
 } // togglePause
+
+// toggle state of the ranking
+function toggleRanking() {
+
+    // toggle ranking
+    settings.ranking = ! settings.ranking;
+
+    if( settings.ranking ) {
+
+        // add loader positions
+        id('positions').innerHTML     = '<img src="img/load.gif">';
+        id('your-position').innerHTML = '<img src="img/load.gif">';
+
+        // start firebase connection
+        var ranking = new Firebase('https://tetrisfox.firebaseio.com/ranking');
+
+        var position = 0;
+
+        var uid = localStorage.getItem('uid');
+
+        // get first 5 positions
+        ranking.orderByValue().limitToFirst(5).once("value", function(snapshot) {
+            var i = 0,
+                p = 0;
+            // clear positions
+            id('positions').innerHTML = '';
+            snapshot.forEach(function(data) {
+                i++;
+                // check position of user
+                if( data.key() == uid ) {
+                    position = i;
+                }
+                // get name of user
+                var name = new Firebase('https://tetrisfox.firebaseio.com/names/' + data.key() );
+                name.once('value', function(dataSnapshot) {
+                    p++;
+                    var color = 'white';
+                    switch(p) {
+                        case 1: color = 'gold';
+                            break;
+                        case 2: color = 'silver';
+                            break;
+                        case 3: color = '#CD7F32';//bronze
+                            break;
+                    }
+                    // add positions to div
+                    id('positions').innerHTML += '<p style="color:'+ color +'">'+ p +'º - '+ dataSnapshot.val() +' - '+ data.val().toString().replace('-','') +'</p>';
+                });
+            });
+
+            // if position was found
+            if( position != 0 ) {
+
+                // add user position
+                id('your-position').innerHTML = position +'º';
+            } else {
+
+                // find user position
+                ranking.orderByValue().endAt( record ).once("value", function(snapshot) {
+                    var i = 0;
+                    snapshot.forEach(function(data) {
+                        i++;
+                        // check position of user
+                        if( data.key() == uid ) {
+                            position = i;
+                        }
+                    });
+                    // add user position
+                    id('your-position').innerHTML = position == 0 ? 'N/A' : position +'º';
+                });
+            }
+        });
+    }
+
+    // pause game
+    settings.pause = settings.ranking;
+
+    // if paused, show pause div
+    id('ranking').style.display = ( settings.ranking ) ? 'block' : 'none' ;
+
+    // put below/above buttons
+    id('buttonAbout').style.zIndex = ( settings.ranking ) ? 0 : 3 ;
+    id('buttonPause').style.zIndex = ( settings.ranking ) ? 0 : 3 ;
+
+} // toggleRanking
 
 // toggle state of the about
 function toggleAbout() {
@@ -802,6 +891,7 @@ function toggleAbout() {
 
     // put buttons above/below
     id('buttonPause').style.zIndex = ( settings.about ) ? 0 : 3 ;
+    id('buttonRanking').style.zIndex = ( settings.about ) ? 0 : 3 ;
 
 }//toggleAbout
 
@@ -933,6 +1023,50 @@ function wasGameOver() {
         // insert pontuation
         id('gameOverScore').innerHTML = score;
 
+        // if Online send to ranking
+        if( navigator.onLine ) {
+
+            // start firebase connection
+            var firebase = new Firebase('https://tetrisfox.firebaseio.com/'),
+
+            // get unique identifier
+            uid = ( localStorage.getItem('uid') != null )? localStorage.getItem('uid') : null,
+
+            Data = new Date();
+
+            // if unique identifier doesn't exist
+            if( uid == null ) {
+
+                var firebasepush = firebase.child('ranking').push( record * -1 );
+
+                uid = firebasepush.key();
+
+                var name_question = '';
+
+                // set name question
+                switch( navigator.language ) {
+                    case 'pt-BR': name_question = "Qual o seu nome?";
+                        break;
+                    case 'es': name_question = "¿Cuál es tu nombre?";
+                        break;
+                    default:
+                        name_question = "What's your name?";
+                }
+
+                // save name
+                firebase.child( 'names' ).child( uid ).set( prompt( name_question ) );
+
+                // storage unique identifier
+                localStorage.setItem( 'uid', uid );
+            } else {
+
+                // update record
+                firebase.child( 'ranking' ).child( uid ).set( record * -1 );
+            }
+
+        } else {
+            alert('Offline');
+        }
     }
 
 }//wasGameOver
@@ -1023,6 +1157,12 @@ id('buttonDown').ontouchend = function() {
 id('buttonPause').onclick = function() {
 
     togglePause('');
+}
+
+// RANKING BUTTON PRESSED
+id('buttonRanking').onclick = function() {
+
+    toggleRanking();
 }
 
 // AUDIO BUTTON PRESSED
