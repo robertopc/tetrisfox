@@ -8,8 +8,8 @@
         "url": "http://robertopc.com.br"
     },
     "icons": {
-        "60": "http://robertopc.com.br/tetrisfox/icons/60.png",
-        "128": "http://robertopc.com.br/tetrisfox/icons/128.png"
+        "60": "./icons/60.png",
+        "128": "./icons/128.png"
     },
     "orientation": ["portrait"],
     "fullscreen": "true",
