@@ -11,12 +11,7 @@
         (function() {
             var manifestUrl = location.href.replace("install.html","") +'manifest.webapp';
 
-            if (! navigator.mozApps.installPackage) {
-                alert("ERRO: Incompatível com seu dispositivo.");
-                return;
-            }
-
-            var req = navigator.mozApps.installPackage(manifestUrl);
+            var req = navigator.mozApps.install(manifestUrl);
             req.onsuccess = function() { alert("Instalado."); };
             req.onerror = function() { alert("Erro: "+this.error.name); };
         })();
