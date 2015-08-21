@@ -2,7 +2,7 @@
     "version": "1.2.1",
     "name": "TetrisFOX",
     "description": "The famous game Tetris for FirefoxOS",
-    "launch_path": "/index.html",
+    "launch_path": "./index.html",
     "developer": {
         "name": "RobertoPC",
         "url": "http://robertopc.com.br"
